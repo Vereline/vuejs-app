@@ -1,6 +1,7 @@
 # vuejs-app
 
 Test app in vuejs
+
 1. folder frontend - vuejs + graphql
 2. folder backend - django + graphql + postgresql (sqlite in testing and dev) 
 3. folder services - flask (as service)
