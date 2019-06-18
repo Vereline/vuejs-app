@@ -1,6 +1,6 @@
 # vuejs-app
 
-Test app in vuejs
+Test app in vuejs (Cookbook)
 
 1. folder frontend - vuejs + graphql
 2. folder backend - django + graphql + postgresql (sqlite in testing and dev) 
@@ -9,7 +9,12 @@ Test app in vuejs
 5. folder docker_container - all things above make as separate docker images in containers and make a config/run/start-stop script
 
 # Frontend
-TODO
+To get started:
+   
+```cd vuejs_app```
+```npm install```
+```npm run dev```
+
 
 # Backend
 

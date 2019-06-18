@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'corsheaders',  # A Django App that adds CORS (Cross-Origin Resource Sharing) headers to responses.
     'django_rest_passwordreset',
+    'graphene_django',
 
     'accounts',
 ]
@@ -271,6 +272,11 @@ DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
         "min_length": 20,
         "max_length": 30
     }
+}
+
+
+GRAPHENE = {
+    'SCHEMA': 'vuejs_app.schema.schema',
 }
 
 
