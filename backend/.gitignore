@@ -1,0 +1,17 @@
+# pycharm settings
+.idea
+
+# vscode settings
+.vscode
+
+# virtual environment
+venv
+
+# debug logs
+logs
+
+# python cache
+__pycache__
+
+# environment variables
+.env
