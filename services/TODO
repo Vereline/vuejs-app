@@ -1,0 +1,4 @@
+export FLASK_APP=hello.py # main file
+export FLASK_ENV=development # debug mode
+flask run
+flask run --host=0.0.0.0 # listen to all public hosts

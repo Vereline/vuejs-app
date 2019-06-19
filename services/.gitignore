@@ -1,0 +1,31 @@
+# pycharm settings
+.idea
+
+# vscode settings
+.vscode
+
+# virtual environment
+venv
+
+# debug logs
+logs
+
+# python cache and executable files
+__pycache__
+*.pyc
+
+# environment variables
+.env
+
+
+instance/
+
+# testing files
+.pytest_cache/
+.coverage
+htmlcov/
+
+# distributions
+dist/
+build/
+*.egg-info/
