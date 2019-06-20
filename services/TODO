@@ -2,3 +2,14 @@ export FLASK_APP=hello.py # main file
 export FLASK_ENV=development # debug mode
 flask run
 flask run --host=0.0.0.0 # listen to all public hosts
+
+RESTful flask server
+https://habr.com/en/post/246699/
+
+
+Russian book flask
+https://habr.com/en/post/193242/
+
+Flask
+http://flask.pocoo.org
+http://flask.pocoo.org/docs/1.0/
