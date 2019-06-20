@@ -37,6 +37,6 @@
 2. ```export FLASK_APP=flaskr```
 3. ```flask init-db```
 
-# Run on production
+## Run on production
 
 1. ``` waitress-serve --call 'flaskr:create_app' ```
