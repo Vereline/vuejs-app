@@ -2,6 +2,8 @@
 
 Test app in vuejs (Cookbook)
 
+![Food image](docs/food.jpg)    
+
 # Frontend
  Link to [README.md](frontend/vuejs_app/README.md)
 

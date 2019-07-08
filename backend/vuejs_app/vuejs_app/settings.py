@@ -246,7 +246,6 @@ JWT_AUTH = {
 
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',  # 'JWT'
     'JWT_AUTH_COOKIE': None,
-
 }
 
 

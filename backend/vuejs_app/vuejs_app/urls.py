@@ -46,7 +46,7 @@ if DEBUG:
         url(r'^api-docs/$', schema_view),
         path('__debug__/', include(debug_toolbar.urls)),
         path('schema/', drf_schema_view),
-        path(r'docs/', include_docs_urls(title='Vuejs_app API DRF')),
+        path('docs/', include_docs_urls(title='Vuejs_app API DRF')),
         path('api-auth/', include('rest_framework.urls')),  # login/logout for Browsable API
 
     ] + urlpatterns
