@@ -11,28 +11,6 @@ jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = (
-            'id',
-            'email',
-            'username',
-            'date_joined',
-            'password',
-            'is_superuser',
-            'is_staff',
-            'is_active',
-            'date_joined',
-            'last_login',
-            'first_name',
-            'last_name',
-            'birth_date',
-            'photo',
-        )
-        extra_kwargs = {'password': {'write_only': True}}
-
-
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -51,6 +29,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'birth_date',
             'photo',
         )
+
+
+class UserSerializer(UserProfileSerializer):
+    class Meta(UserProfileSerializer.Meta):
+        fields = UserProfileSerializer.Meta.fields + (
+            'password',
+        )
+        extra_kwargs = {'password': {'write_only': True}}
 
 
 class EmailAndUsernameJWTSerializer(JSONWebTokenSerializer):

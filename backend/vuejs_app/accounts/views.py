@@ -68,11 +68,11 @@ class UpdateUserView(ModelViewSet):
     serializer_class = UserSerializer
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer)
     parser_classes = (JSONParser, MultiPartParser,)
+    queryset = User.objects.all()
 
     def post(self, request, *args, **kwargs):
         user_data = request.data
-        user = request.user
-        serializer = UserSerializer(user, data=user_data, partial=True)
+        serializer = self.get_serializer(request.user, data=user_data, partial=True)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         if 'password' in user_data:
@@ -86,7 +86,7 @@ class UpdateUserView(ModelViewSet):
 
     def profile(self, request):
         """
-        Get info about user
+        Get info about current user
         """
         serializer = UserProfileSerializer(request.user)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -95,11 +95,7 @@ class UpdateUserView(ModelViewSet):
         """
         Get info about user
         """
-        try:
-            user = User.objects.get(pk=pk)
-        except User.DoesNotExist as ex:
-            logger.error(ex.__str__())
-            return Response(status=status.HTTP_404_NOT_FOUND, data={'error': 'User is not found'})
+        user = self.get_object()
         serializer = UserProfileSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

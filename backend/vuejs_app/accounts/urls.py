@@ -5,10 +5,10 @@ from rest_framework_jwt.views import ObtainJSONWebToken, refresh_jwt_token, veri
 
 urlpatterns = [
     url(r'^token-auth/', ObtainJSONWebToken.as_view(serializer_class=EmailAndUsernameJWTSerializer),
-        name='obtain_token'),  # login view
+        name='login_view_obtain_token'),
     url(r'^token-refresh/', refresh_jwt_token, name='refresh_token'),
     url(r'^token-verify/', verify_jwt_token, name='verify_token'),
-    # apply 2 migrations to use this thing
+    # apply 2 migrations to use password-reset
     url(r'^password-reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 
     url(r'^logout/', LogoutView.as_view(), name='logout'),
