@@ -64,10 +64,6 @@ INSTALLED_APPS = [
     'graphene_django',
 
     'accounts',
-    'ingredients',
-    'recipes',
-    'menu',
-    'cuisines',
     'default',
 ]
 

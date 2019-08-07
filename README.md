@@ -1,20 +1,25 @@
 # vuejs-app
 
-Test app in vuejs (Cookbook)
+Test app in vuejs (Fan service for the game Elven Scroll)
 
-![Food image](docs/food.jpg)    
+<!-- ![Game image](docs/game.jpg) -->
 
-# Frontend
- Link to [README.md](frontend/vuejs_app/README.md)
+## Frontend
 
-# Backend
- Link to [README.md](backend/README.md)
+Link to [README.md](frontend/vuejs_app/README.md)
 
-# Services
- Link to [README.md](services/README.md)
+## Backend
 
-# Playground
+Link to [README.md](backend/README.md)
+
+## Services
+
+Link to [README.md](services/README.md)
+
+## Playground
+
 TODO
 
-# Docker compose
+## Docker compose
+
 TODO
