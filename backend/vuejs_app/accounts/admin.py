@@ -38,7 +38,7 @@ class UserAdmin(admin.ModelAdmin):
 
     def avatar_image(self, obj):
         width = obj.photo.width if obj.photo.width < 300 else 300
-        height = obj.photo.height if obj.photo.height < 300 else 300
+        height = obj.photo.height / (obj.photo.width / width)
         return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
             url=obj.photo.url,
             width=width,

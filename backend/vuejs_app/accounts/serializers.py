@@ -39,6 +39,20 @@ class UserSerializer(UserProfileSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
 
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'photo',
+            'is_staff',
+            'is_active',
+        )
+
+
 class EmailAndUsernameJWTSerializer(JSONWebTokenSerializer):
     username_field = 'username_or_email'
 

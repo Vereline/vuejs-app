@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'graphene_django',
 
     'accounts',
+    'blogs',
     'default',
 ]
 

@@ -67,3 +67,6 @@ cuisine -> menu(s) -> recipes -> ingredients
 #    pip-compile --output-file requirements.txt requirements.in
 #
 https://github.com/davesque/django-rest-framework-simplejwt (old jwt library is old and expired)
+
+
+Do both Qrapgql and DRF queries
