@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from accounts.serializers import AuthorSerializer
 
-from blogs.models import  BlogPost, Comment
+from blogs.models import BlogPost, Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -12,7 +12,7 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = (
             'id',
-            'blogpost',
+            'blog_post',
             'author',
             'text',
         )
@@ -32,7 +32,3 @@ class BlogPostSerializer(serializers.ModelSerializer):
             'image',
             'comments',
         )
-    
-    def validate(self, attrs):
-        # check is author is staff
-        return attrs

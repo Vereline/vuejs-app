@@ -26,8 +26,8 @@ image_storage = FileSystemStorage(
 
 
 def image_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/avatars/<filename>
-    new_filename = instance.create_photo_name(instance.username) + '.' + filename.split('.')[-1]
+    # file will be uploaded to MEDIA_ROOT/blog_images/<filename>
+    new_filename = instance.create_image_name(instance.author.username) + '.' + filename.split('.')[-1]
     return 'blog_images/{0}'.format(new_filename)
 
 
@@ -40,19 +40,19 @@ class BlogPost(TimestampedModel):
     author = models.ForeignKey(User, related_name='+', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=image_directory_path, storage=image_storage, blank=True, null=True)
 
-    objects = BlogPostManager
+    objects = BlogPostManager()
 
     def __str__(self):
         return 'BlogPost #{0}'.format(self.id)
 
     @staticmethod
-    def create_image_name(username):
+    def create_image_name(author_username):
         date_string = datetime.datetime.now().strftime("%m-%d-%Y")
-        return '{0}_{1}'.format(username, date_string)
+        return '{0}_{1}'.format(author_username, date_string)
 
 
 class Comment(TimestampedModel):
-    blog_post = models.ForeignKey(BlogPost, related_name='+', on_delete=models.CASCADE)
+    blog_post = models.ForeignKey(BlogPost, related_name='comments', on_delete=models.CASCADE)
     author = models.ForeignKey(User, related_name='+', on_delete=models.CASCADE)
     text = models.CharField(default='', max_length=255, null=True)
 
@@ -70,7 +70,7 @@ def delete_unused_images(sender, instance, **kwargs):
     :param kwargs:
     :return:
     """        
-    logger.info('Delete {}'.format(instance.title_image.name))
+    logger.info('Delete {}'.format(instance.image.name))
     try:
         storage, path = instance.image.storage, instance.image.path
         storage.delete(path)

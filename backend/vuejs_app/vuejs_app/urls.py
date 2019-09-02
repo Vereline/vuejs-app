@@ -27,6 +27,7 @@ favicon_view = RedirectView.as_view(url='/static/images/favicon.ico', permanent=
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
+    path('blogs/', include('blogs.urls')),
     path('graphql', GraphQLView.as_view(graphiql=True)),
     re_path(r'^favicon\.ico$', favicon_view),
 ]

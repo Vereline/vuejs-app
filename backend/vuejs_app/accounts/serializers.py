@@ -1,10 +1,13 @@
-from accounts.models import User
-from rest_framework import serializers
-
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
+
+from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
 from rest_framework_jwt.settings import api_settings
+
+from accounts.models import User
 
 # Get the JWT settings
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -51,6 +54,11 @@ class AuthorSerializer(serializers.ModelSerializer):
             'is_staff',
             'is_active',
         )
+
+    def validate(self, attrs):
+        if not attrs['is_staff']:
+            raise ValidationError('Authors of this project should be only staff users')
+        return super().validate(attrs)
 
 
 class EmailAndUsernameJWTSerializer(JSONWebTokenSerializer):

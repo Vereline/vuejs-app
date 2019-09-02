@@ -35,7 +35,7 @@ parso==0.4.0
 pexpect==4.7.0
 pickleshare==0.7.5
 Pillow==6.0.0
-pip==19.2.1
+pip==19.2.3
 promise==2.2.1
 prompt-toolkit==2.0.9
 psycopg2==2.8.3
@@ -46,7 +46,7 @@ PyJWT==1.7.1
 pylint==2.3.1
 python-dotenv==0.10.3
 pytz==2019.1
-PyYAML==5.1.1
+PyYAML==5.1.2
 requests==2.22.0
 Rx==1.6.1
 setuptools==41.0.1

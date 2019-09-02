@@ -1,15 +1,18 @@
 import pytz
 
+from django.utils import timezone
 
-def time_at_timezone(time, timezone):
+
+def time_at_timezone(time, timezone_code):
     """
     Return time in the specified timezone
     :param time: datetime objects
-    :param timezone: string timezone code
+    :param timezone_code: string timezone code
     :return: datetime
     """
-    tz = pytz.timezone(timezone)
+    tz = pytz.timezone(timezone_code)
     return time.astimezone(tz)
+
 
 def delete_object(obj):
     """
