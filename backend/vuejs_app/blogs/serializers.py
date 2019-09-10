@@ -18,6 +18,18 @@ class CommentSerializer(serializers.ModelSerializer):
         )
 
 
+class ModifyCommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = (
+            'id',
+            'blog_post',
+            'author',
+            'text',
+        )
+
+
 class BlogPostSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True)
     author = AuthorSerializer()
@@ -31,4 +43,17 @@ class BlogPostSerializer(serializers.ModelSerializer):
             'author',
             'image',
             'comments',
+        )
+
+
+class ModifyBlogPostSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = BlogPost
+        fields = (
+            'id',
+            'title',
+            'full_text',
+            'author',
+            'image',
         )

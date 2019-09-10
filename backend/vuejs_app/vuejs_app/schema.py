@@ -1,14 +1,14 @@
 from graphene import ObjectType, Schema
-import accounts.schema
+import accounts.graphql.schema as accounts_schema
 
 
-class Query(accounts.schema.Query, ObjectType):
+class Query(accounts_schema.Query, ObjectType):
     # This class will inherit from multiple Queries
     # as we begin to add more apps to our project
     pass
 
 
-class Mutation(accounts.schema.UserMutation, ObjectType):
+class Mutation(accounts_schema.UserMutation, ObjectType):
     # This class will inherit from multiple Queries
     # as we begin to add more apps to our project
     pass

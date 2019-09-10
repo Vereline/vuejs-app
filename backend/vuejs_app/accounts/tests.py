@@ -1,7 +1,9 @@
 from django.test import TestCase
-from accounts.models import User
+
 from rest_framework.test import APIRequestFactory, APIClient
 from rest_framework import status
+
+from accounts.models import User
 # Create your tests here.
 
 
@@ -88,4 +90,13 @@ class TestJWTAuthentication(TestCase):
     @classmethod
     def tearDownTestData(cls):
         # drop test database
+        pass
+
+
+class TestGraphqlSchemaUser(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        pass
+
+    def test_schema(self):
         pass

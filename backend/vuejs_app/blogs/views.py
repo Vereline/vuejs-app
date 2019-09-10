@@ -5,8 +5,8 @@ from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from rest_framework.viewsets import ModelViewSet
 
 from blogs.models import BlogPost, Comment
-from blogs.serializers import BlogPostSerializer, CommentSerializer
-from blogs.utils import BlogPostSetPagination
+from blogs.serializers import BlogPostSerializer, CommentSerializer, ModifyBlogPostSerializer, ModifyCommentSerializer
+from blogs.utils import BlogPostSetPagination, IsAdminOrReadOnly
 # Create your views here.
 
 
@@ -21,16 +21,22 @@ class BlogPostView(ModelViewSet):
     """
     serializer_class = BlogPostSerializer
     pagination_class = BlogPostSetPagination
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAdminOrReadOnly, )
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
     parser_classes = (JSONParser, MultiPartParser, )
     queryset = BlogPost.objects.all()
 
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT']:
+            return ModifyBlogPostSerializer
+        else:
+            return super().get_serializer_class()
+
     def get_queryset(self):
         if self.request.method in permissions.SAFE_METHODS:
-            return self.queryset
+            return self.queryset.prefetch_related('comments')
         else:
-            return self.queryset.filter(author=self.request.user)
+            return self.queryset.filter(author_id=self.request.user.id).prefetch_related('comments')
 
 
 class CommentView(ModelViewSet):
@@ -48,9 +54,19 @@ class CommentView(ModelViewSet):
     parser_classes = (JSONParser, )
     queryset = Comment.objects.all()
 
-    def get_queryset(self):
-        blog_id = self.kwargs.get('blog_id', None)
-        if not blog_id:
-            return self.queryset
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT']:
+            return ModifyCommentSerializer
         else:
-            return self.queryset.filter(blog_post_id=blog_id)
+            return super().get_serializer_class()
+
+    def get_queryset(self):
+        if self.request.method in permissions.SAFE_METHODS:
+            queryset = self.queryset
+        else:
+            queryset = self.queryset.filter(author_id=self.request.user.id)
+
+        blog_id = self.kwargs.get('blog_id', None)
+        if blog_id:
+            return queryset.filter(blog_post_id=blog_id)
+        return queryset
