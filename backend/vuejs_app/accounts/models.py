@@ -2,25 +2,25 @@ import datetime
 import logging
 import os
 import re
-from django.db import models
+
+from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 from django.db.models.signals import pre_delete
-
-from vuejs_app.settings import STATICFILES_DIRS, MEDIA_ROOT, MEDIA_URL
 
 
 logger = logging.getLogger(__name__)
 # Create your models here.
 
-default_image_path = '{0}/images/user-default.png'.format(STATICFILES_DIRS[0])
+default_image_path = '{0}/images/user-default.png'.format(settings.STATICFILES_DIRS[0])
 
 
 image_storage = FileSystemStorage(
     # Physical file location ROOT
-    location='{0}/'.format(MEDIA_ROOT),
+    location='{0}/'.format(settings.MEDIA_ROOT),
     # Url for file
-    base_url=MEDIA_URL,
+    base_url=settings.MEDIA_URL,
 )
 
 
