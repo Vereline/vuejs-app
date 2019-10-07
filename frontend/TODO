@@ -41,6 +41,8 @@ https://maxpfrontend.ru/zametki/testovoe-zadanie-3/
 https://maxpfrontend.ru/zametki/spisok-testovyh-zadaniy-ot-podpischikov-1/
 
 
+Vue CLI (UI tool for creating new vue apps)
+https://cli.vuejs.org
 
 
 Make style switch between darkly and flatly
@@ -99,3 +101,4 @@ a {
 
 
 # TODO: sort dev dependencies and prod dependencies in package.json
+
