@@ -33,7 +33,7 @@
 
           </b-nav-item-dropdown>
         </div>
-        <div v-else="isLogin">
+        <div v-else>
           <b-nav-item href="#" disabled>Log In</b-nav-item>
           <b-nav-item href="#" disabled>Sign Up</b-nav-item>
         </div>

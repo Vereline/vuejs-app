@@ -101,4 +101,4 @@ a {
 
 
 # TODO: sort dev dependencies and prod dependencies in package.json
-
+# TODO: half of app is vuex + DRF, other half is GraphQL vue-apollo + graphene django
