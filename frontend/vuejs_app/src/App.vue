@@ -2,43 +2,7 @@
   <div id="app">
     <div id="main-page">
     <!-- Navbar -->
-    <b-navbar toggleable="lg" type="light" variant="light">
-      <b-navbar-brand href="#" class="text-uppercase">Elven Scroll</b-navbar-brand>
-
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <b-nav-item href="#" class="text-uppercase">Heroes</b-nav-item>
-          <b-nav-item href="#" class="text-uppercase">Locations</b-nav-item>
-          <b-nav-item href="#" class="text-uppercase">Items</b-nav-item>
-          <b-nav-item href="#" class="text-uppercase">Events</b-nav-item>
-          <b-nav-item href="#" class="text-uppercase">Blog</b-nav-item>
-        </b-navbar-nav>
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-
-          <b-nav-item-dropdown text="Lang" right>
-            <b-dropdown-item href="#">EN</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">CZ</b-dropdown-item>
-          </b-nav-item-dropdown>
-
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template v-slot:button-content>
-              <em>User</em>
-            </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-
-          </b-nav-item-dropdown>
-          <b-nav-item href="#" disabled>Log In</b-nav-item>
-          <b-nav-item href="#" disabled>Sign Up</b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+      <router-view></router-view>
 
     <!-- Masthead with image -->
     <header class="masthead">
@@ -58,7 +22,7 @@
         <b-row class="align-items-center">
           <b-col col lg="6"  class="order-lg-2">
             <div class="p-5">
-              <img class="img-fluid" src="https://via.placeholder.com/500" alt="">
+              <b-img class="img-fluid table-img" src="https://via.placeholder.com/700" alt=""/>
             </div>
           </b-col>
           <b-col col lg="6"  class="order-lg-1">
@@ -76,7 +40,7 @@
         <b-row class="align-items-center">
           <b-col col lg="6">
             <div class="p-5">
-              <img class="img-fluid" src="https://via.placeholder.com/500" alt="">
+              <b-img class="img-fluid table-img" src="https://via.placeholder.com/700" alt=""/>
             </div>
           </b-col>
           <b-col col lg="6">
@@ -165,4 +129,8 @@ export default {
     background-position: center;
     background-repeat: no-repeat;
 }
+  .table-img {
+    min-width: 350px;
+  }
+
 </style>
