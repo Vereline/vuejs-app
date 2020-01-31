@@ -27,7 +27,8 @@ class BlogPostView(ModelViewSet):
     queryset = BlogPost.objects.all()
 
     def get_serializer_class(self):
-        if self.request.method in ['POST', 'PUT']:
+        # need this check to avoid fails of drf docs
+        if self.request and self.request.method in ['POST', 'PUT']:
             return ModifyBlogPostSerializer
         else:
             return super().get_serializer_class()
@@ -55,7 +56,8 @@ class CommentView(ModelViewSet):
     queryset = Comment.objects.all()
 
     def get_serializer_class(self):
-        if self.request.method in ['POST', 'PUT']:
+        # need this check to avoid fails of drf docs
+        if self.request and self.request.method in ['POST', 'PUT']:
             return ModifyCommentSerializer
         else:
             return super().get_serializer_class()

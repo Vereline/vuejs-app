@@ -63,6 +63,9 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     'graphene_django',
 
+    # Yet another Swagger generator
+    'drf_yasg',
+
     'accounts',
     'blogs',
     'default',
