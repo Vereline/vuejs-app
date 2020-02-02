@@ -3,6 +3,7 @@ import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue';
 
 import './styles/bootswatch_flatly.scss';
+// import './styles/bootswatch_darkly.scss';
 
 import router from './components/router'
 

@@ -2,7 +2,7 @@
   "name": "vuejs_app",
   "description": "A Vue.js project",
   "version": "1.0.0",
-  "author": "Victoria <vstanko1998@gmail.com>",
+  "author": "Victoria <viktoryia.stanko@gmail.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -16,6 +16,7 @@
     "apollo-link-http": "^1.5.16",
     "apollo-link-ws": "^1.0.19",
     "apollo-utilities": "^1.3.2",
+    "axios": "^0.19.2",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.2",
     "bootswatch": "^4.3.1",
@@ -28,7 +29,8 @@
     "vue-apollo": "^3.0.0-alpha.3",
     "vue-material": "^1.0.0-beta-11",
     "vue-router": "^3.0.6",
-    "vuex": "^3.1.1"
+    "vuex": "^3.1.1",
+    "qs": "latest"
   },
   "browserslist": [
     "> 1%",

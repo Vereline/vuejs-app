@@ -3,6 +3,7 @@
     <div id="main-page">
     <!-- Navbar -->
       <router-view></router-view>
+      <navbar :isLogin="isLogin"></navbar>
 
     <!-- Masthead with image -->
     <header class="masthead">
@@ -105,11 +106,17 @@
 </template>
 
 <script>
+import Navbar from "./components/navbar/Navbar";
 export default {
   name: 'app',
+  components: {
+      'navbar': Navbar
+  },
+  props: ['isLogin'],
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      isLogin: false,
     }
   }
 }
