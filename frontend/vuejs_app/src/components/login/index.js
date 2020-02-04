@@ -16,10 +16,17 @@ export default function login(username, password) {
     data: data,
     url: `${API_URL}/${url}/`,
   };
-  axios(options)
+
+  return axios(options)
     .then(response => {
-      console.log(response.data);
       store.commit('setToken', response.data['token']);
+      store.commit('setIsLogin');
+      return {status: response.status, errorMessage: ''};
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      return {
+        status: error.response.status,
+        errorMessage: error.response.request.responseText,
+       };
+    })
 }

@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="login-modal" hide-footer title="Login" text-uppercase centered>
+  <b-modal id="login-modal" ref="login-modal" hide-footer title="Login" text-uppercase centered>
     <div class="modal-container">
       <div class="modal-body mb-2">
         <b-form>
@@ -25,14 +25,25 @@
   export default {
     name: "LoginModal",
     methods: {
-      loginUser: function () {
-        login(this.username, this.password)
+      loginUser() {
+        login(this.username, this.password).then((data) => {
+        if (data.status === 200) {
+          this.closeModal()
+        }
+        else if (data.status === 400) {
+          this.errorMessage = data.errorMessage;
+        } 
+        });
+      },
+      closeModal(e) {
+        this.$refs['login-modal'].hide()
       },
     },
     data () {
       return {
         username: '',
         password: '',
+        errorMessage: '',
       }
     }
   }

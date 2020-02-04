@@ -46,15 +46,20 @@
 
 <script>
   import LoginModal from "../login/Login";
+  import store from '../store/index';
   export default {
     name: "Navbar",
     components: {
         'login-modal': LoginModal
     },
-    props: ['isLogin'],
+    store,
+    computed : {
+      isLogin () {
+        return this.$store.state.isLogin
+      }
+    },
     data () {
       return {
-        isLogin: false,
       }
     }
   }
