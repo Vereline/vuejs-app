@@ -1,22 +1,54 @@
 <template>
-  <b-modal id="login-modal" ref="login-modal" hide-footer title="Login" text-uppercase centered>
+  <b-modal id="login-modal" ref="login-modal" hide-footer>
+    <template v-slot:modal-title>
+      <div class="text-uppercase">Login</div>
+    </template>
     <div class="modal-container">
       <div class="modal-body mb-2">
         <b-form>
-          <b-form-input class="m-1" placeholder="Enter your username or email" type="email" v-model.trim="username"></b-form-input>
-          <b-form-input class="m-1" placeholder="Enter your password" type="password" v-model.trim="password"></b-form-input>
-          <div class="w-100">
-          <b-button class="btn-success float-right mt-2" title="Login" v-on:click="loginUser">
-            Login
-          </b-button>
-          </div>
+          <b-form-group
+            label="Username or email"
+            label-for="login-username"
+            :invalid-feedback="invalidUsername"
+            :state="state"
+          >
+            <b-form-input
+              id="login-username"
+              placeholder="Enter your username or email"
+              type="email"
+              v-model.trim="username"
+            >
+            </b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="Password"
+            label-for="login-password"
+            :invalid-feedback="invalidPassword"
+            :state="state"
+          >
+            <b-form-input
+              id="login-password"
+              placeholder="Enter your password"
+              type="password"
+              v-model.trim="password"
+            >
+            </b-form-input>
+          </b-form-group>
+          <b-container class="bv-example-row w-100">
+            <b-row>
+              <b-col cols="8">
+                <b-link class="float-left mt-3"><router-link to="/signup">Don't have an account? Sign Up.</router-link></b-link>
+              </b-col>
+              <b-col>
+                <b-button class="btn-success float-right mt-1" title="Login" v-on:click="loginUser">
+                  Login
+                </b-button>
+              </b-col>
+            </b-row>
+          </b-container>
         </b-form>
       </div>
-      <div class="modal-footer mt-5">
-        <b-link class="float-right"><router-link to="/signup">Don't have an account? Sign Up.</router-link></b-link>
-      </div>
     </div>
-
   </b-modal>
 </template>
 
@@ -32,11 +64,17 @@
         }
         else if (data.status === 400) {
           this.errorMessage = data.errorMessage;
-        } 
+        }
         });
       },
       closeModal(e) {
         this.$refs['login-modal'].hide()
+      },
+      invalidUsername() {
+        return 'false'
+      },
+      invalidPassword() {
+        return 'false'
       },
     },
     data () {

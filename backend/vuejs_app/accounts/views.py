@@ -23,6 +23,10 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 
+# TODO: please, don't use this code again in the future(some parts were borrowed from your previous projects),
+#  write your own code, which will be more qualitative
+
+# TODO: I mean these views, serializers and that ugly code in the models.py file
 
 class SignUpView(APIView):
     """
