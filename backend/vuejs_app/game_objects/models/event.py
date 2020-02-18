@@ -21,4 +21,6 @@ class Ability(BaseGameObject):
     """
     Spell, perk etc, all things with balance
     """
-    pass
+    persons = models.ManyToManyField(Person, related_name='person_abilities')
+    power = models.CharField(max_length=255, default='')
+    stamina_points = models.IntegerField(default=0, null=False)
