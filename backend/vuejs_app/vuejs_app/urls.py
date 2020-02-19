@@ -38,13 +38,39 @@ if DEBUG:
     from rest_framework.documentation import include_docs_urls
     from rest_framework.schemas import get_schema_view
 
+    # drf-yasg - Yet another Swagger generator
+    from rest_framework import permissions
+    from drf_yasg.views import get_schema_view as drf_yasg_get_schema_view
+    from drf_yasg import openapi
+
     schema_view = get_swagger_view(title='Vuejs_app API')
     drf_schema_view = get_schema_view(title='Vuejs_app API')
+
+    drf_yasg_schema_view = drf_yasg_get_schema_view(
+        openapi.Info(
+            title="Vuejs_app API",
+            default_version='v1',
+            description="Vuejs_app API DRF",
+            terms_of_service="http://127.0.0.1:8000/docs/",
+            contact=openapi.Contact(email="vstanko1998@gmail.com"),
+            license=openapi.License(name="BSD License"),
+        ),
+        public=True,
+        permission_classes=(permissions.AllowAny,),
+    )
 
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
     urlpatterns = [
         url(r'^api-docs/$', schema_view),
+        # urls for drf-yasg - Yet another Swagger generator
+        url(r'^drf-yasg-swagger(?P<format>\.json|\.yaml)$', drf_yasg_schema_view.without_ui(cache_timeout=0),
+            name='drf-yasg-schema-json'),
+        url(r'^drf-yasg-swagger/$', drf_yasg_schema_view.with_ui('swagger', cache_timeout=0),
+            name='drf-yasg-schema-swagger-ui'),
+        url(r'^drf-yasg-redoc/$', drf_yasg_schema_view.with_ui('redoc', cache_timeout=0),
+            name='drf-yasg-schema-redoc'),
+
         path('__debug__/', include(debug_toolbar.urls)),
         path('schema/', drf_schema_view),
         path('docs/', include_docs_urls(title='Vuejs_app API DRF')),

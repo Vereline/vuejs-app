@@ -301,6 +301,8 @@ if DEBUG:
     INSTALLED_APPS += (
         'debug_toolbar',
         'rest_framework_swagger',
+        # Yet another Swagger generator
+        'drf_yasg',
         'django_extensions',  # for building diagrams
         # sudo apt-get install python-pydot python-pydot-ng graphviz
         # manage.py graph_models -a -o myapp_models.png

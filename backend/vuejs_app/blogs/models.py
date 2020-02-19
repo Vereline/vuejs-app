@@ -3,14 +3,14 @@ import logging
 import os
 import re
 
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.db.models.signals import pre_delete
-from django.core.files.storage import FileSystemStorage
 
 from accounts.models import User
 from blogs.managers import BlogPostManager, CommentManager
 from default.models import TimestampedModel
-from vuejs_app.settings import MEDIA_ROOT, MEDIA_URL
 
 
 logger = logging.getLogger(__name__)
@@ -19,9 +19,9 @@ logger = logging.getLogger(__name__)
 
 image_storage = FileSystemStorage(
     # Physical file location ROOT
-    location='{0}/'.format(MEDIA_ROOT),
+    location='{0}/'.format(settings.MEDIA_ROOT),
     # Url for file
-    base_url=MEDIA_URL,
+    base_url=settings.MEDIA_URL,
 )
 
 
