@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'accounts',
     'blogs',
     'default',
+    'game_objects',
 ]
 
 MIDDLEWARE = [
