@@ -69,6 +69,10 @@ cuisine -> menu(s) -> recipes -> ingredients
 https://github.com/davesque/django-rest-framework-simplejwt (old jwt library is old and expired)
 
 
-Do both Qrapgql and DRF queries
+Update pip packages
+
+pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+
+Do both QraphQl and DRF queries
 https://github.com/axnsan12/drf-yasg/
 https://drf-yasg.readthedocs.io/en/stable/
