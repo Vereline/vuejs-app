@@ -28,11 +28,11 @@
 <style scoped lang="scss">
 .about-us{
   h2 {
-    margin-bottom:50px; 
-    padding-bottom:40px; 
-    font-size:80px; 
-    text-align:center; 
-    text-transform:uppercase; 
+    margin-bottom:50px;
+    padding-bottom:40px;
+    font-size:80px;
+    text-align:center;
+    text-transform:uppercase;
     border-bottom:1px solid #CCCCCC;
   }
 
@@ -43,9 +43,14 @@
       margin:20px 0 0 0;
       padding:0;
     }
+
+    img {
+      margin: 0 auto;
+      width: 100%;
+    }
   }
 
-} 
+}
 
 
 </style>

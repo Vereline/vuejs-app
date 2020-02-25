@@ -9,6 +9,7 @@ import Blog from '../blog/Blog'
 import Heroes from '../heroes/Heroes'
 import Login from '../login/Login'
 import Signup from '../signup/Signup'
+import NotFound from '../notFound/notFound'
 
 Vue.use(Router);
 
@@ -59,6 +60,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+        {
+      path: '*',
+      name: 'NotFound',
+      component: NotFound
     },
   ]
 })
