@@ -5,12 +5,16 @@ import BootstrapVue from 'bootstrap-vue';
 import './styles/bootswatch_flatly.scss';
 // import './styles/bootswatch_darkly.scss';
 
-import router from './components/router'
+import router from './router'
+import store from './store'
+import apolloProvider from './apollo-client'
 
 Vue.use(BootstrapVue);
 
 new Vue({
   el: '#app',
   router,
+  store,
+  apolloProvider: apolloProvider,
   render: h => h(App)
 });

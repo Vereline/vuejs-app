@@ -1,6 +1,6 @@
 import axios from 'axios';
-import store from '../store/index'
-import {API_URL} from "./constants";
+import store from '../../store'
+import {API_URL} from "../../constants";
 
 export default function login(username, password) {
   const data = {

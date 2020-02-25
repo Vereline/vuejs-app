@@ -10,7 +10,8 @@
             label="Username or email"
             label-for="login-username"
             :invalid-feedback="invalidUsername"
-            :state="state"
+            :valid-feedback="validUsername"
+            :state="validateUsername"
           >
             <b-form-input
               id="login-username"
@@ -24,7 +25,8 @@
             label="Password"
             label-for="login-password"
             :invalid-feedback="invalidPassword"
-            :state="state"
+            :valid-feedback="validPassword"
+            :state="validatePassword"
           >
             <b-form-input
               id="login-password"
@@ -70,11 +72,25 @@
       closeModal(e) {
         this.$refs['login-modal'].hide()
       },
+    },
+    computed: {
+      validateUsername() {
+        return this.username.length > 0
+      },
+      validatePassword() {
+        return this.password.length > 0
+      },
       invalidUsername() {
-        return 'false'
+        return 'It shouldn\'t be empty at least.'
       },
       invalidPassword() {
-        return 'false'
+        return 'It shouldn\'t be empty at least.'
+      },
+      validUsername() {
+        return 'Looks good!'
+      },
+      validPassword() {
+        return 'Looks good!'
       },
     },
     data () {

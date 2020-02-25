@@ -46,7 +46,7 @@
 
 <script>
   import LoginModal from "../login/Login";
-  import store from '../store/index';
+  import store from '../../store';
   export default {
     name: "Navbar",
     components: {
