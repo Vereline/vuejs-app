@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 from game_objects.models.default import BaseGameObject
+from game_objects.managers import PersonManager
 
 
 class Person(BaseGameObject):
@@ -13,3 +14,5 @@ class Person(BaseGameObject):
     last_name = models.CharField(max_length=255, default='')
     race = models.CharField(max_length=255, default='')
     sex = models.CharField(max_length=255, default='')
+
+    objects = PersonManager()

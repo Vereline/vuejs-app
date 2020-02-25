@@ -5,6 +5,7 @@ from game_objects.models.item import Item
 from game_objects.models.person import Person
 from game_objects.models.place import Place
 from game_objects.models.default import BaseGameObject
+from game_objects.managers import EventManager, AbilityManager
 
 
 class Event(BaseGameObject):
@@ -16,6 +17,8 @@ class Event(BaseGameObject):
     place = models.ForeignKey(Place, related_name='place_events', on_delete=models.DO_NOTHING, null=True)
     items = models.ManyToManyField(Item, related_name='events')
 
+    objects = EventManager()
+
 
 class Ability(BaseGameObject):
     """
@@ -24,3 +27,5 @@ class Ability(BaseGameObject):
     persons = models.ManyToManyField(Person, related_name='person_abilities')
     power = models.CharField(max_length=255, default='')
     stamina_points = models.IntegerField(default=0, null=False)
+
+    objects = AbilityManager()

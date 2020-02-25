@@ -13,8 +13,7 @@ class BaseGameObject(TimestampedModel):
     description = models.TextField()
 
     def __str__(self):
-        return '{} #{}: {}'.format(self.__name__, self.id, self.name)
+        return '{} #{}: {}'.format('BaseGameObject', self.id, self.name)
 
     class Meta:
-
         abstract = True
