@@ -11,7 +11,7 @@ class Place(BaseGameObject):
     Models of locations
     """
     size = models.CharField(max_length=255, default='', help_text='Size of location or something special and unique')
-    flora = models.ManyToManyField(Person, related_name='flora_places')
-    fauna = models.ManyToManyField(Person, related_name='fauna_places')
+    flora = models.ManyToManyField(Person, related_name='flora_places', null=True)
+    fauna = models.ManyToManyField(Person, related_name='fauna_places', null=True)
 
     objects = PlaceManager()

@@ -13,11 +13,13 @@ class CreateBlogPost(graphene.Mutation):
     blog_post = graphene.Field(lambda: BlogPostType)
 
     class Arguments:
-        name = graphene.String()
-        description = graphene.String()
+        title = graphene.String()
+        full_text = graphene.String()
+        author = graphene.Int()
+        # image = graphene.String()
 
-    def mutate(self, info, name, description):
-        blog_post = BlogPost(name=name, description=description, isDone=False)
+    def mutate(self, info, title, full_text, author):
+        blog_post = BlogPost(title=title, full_text=full_text, author_id=author)
         blog_post.save()
         ok = True
         return CreateBlogPost(blog_post=blog_post, ok=ok)
@@ -29,11 +31,13 @@ class UpdateBlogPost(graphene.Mutation):
 
     class Arguments:
         id = graphene.String()
-        IsDone = graphene.Boolean()
+        title = graphene.String()
+        full_text = graphene.String()
 
-    def mutate(self, info, id, IsDone):
+    def mutate(self, info, id, title, full_text):
         blog_post = BlogPost.objects.get(pk=id)
-        blog_post.isDone = IsDone
+        blog_post.title = title
+        blog_post.full_text = full_text
         blog_post.save()
         ok = True
         return UpdateBlogPost(blog_post=blog_post, ok=ok)
@@ -42,7 +46,7 @@ class UpdateBlogPost(graphene.Mutation):
 class BlogQuery(graphene.ObjectType):
     blog_posts = graphene.List(BlogPostType)
 
-    def resolve_tasks(self, info):
+    def resolve_blog_posts(self, info):
         return BlogPost.objects.all()
 
 
@@ -56,11 +60,12 @@ class CreateComment(graphene.Mutation):
     comment = graphene.Field(lambda: CommentType)
 
     class Arguments:
-        name = graphene.String()
-        description = graphene.String()
+        blog_post = graphene.String()
+        author = graphene.String()
+        text = graphene.String()
 
-    def mutate(self, info, name, description):
-        comment = Comment(name=name, description=description, isDone=False)
+    def mutate(self, info, blog_post, author, text):
+        comment = Comment(blog_post_id=blog_post, author_id=author, text=text)
         comment.save()
         ok = True
         return CreateComment(comment=comment, ok=ok)
@@ -72,11 +77,11 @@ class UpdateComment(graphene.Mutation):
 
     class Arguments:
         id = graphene.String()
-        IsDone = graphene.Boolean()
+        text = graphene.String()
 
-    def mutate(self, info, id, IsDone):
+    def mutate(self, info, id, text):
         comment = Comment.objects.get(pk=id)
-        comment.isDone = IsDone
+        comment.text = text
         comment.save()
         ok = True
         return UpdateComment(comment=comment, ok=ok)
@@ -85,7 +90,7 @@ class UpdateComment(graphene.Mutation):
 class CommentQuery(graphene.ObjectType):
     comments = graphene.List(CommentType)
 
-    def resolve_tasks(self, info):
+    def resolve_comments(self, info):
         return Comment.objects.all()
 
 
