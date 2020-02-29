@@ -5,6 +5,8 @@ import Events from './components/events/Events'
 import Locations from './components/locations/Locations'
 import About from './components/about/About'
 import Items from './components/items/Items'
+import BlogDetail from './components/blogDetail/blogDetail'
+import CreateBlog from './components/createBlog/createBlog'
 import Blog from './components/blog/Blog'
 import Heroes from './components/heroes/Heroes'
 import Login from './components/login/Login'
@@ -45,6 +47,16 @@ export default new Router({
       path: '/blog',
       name: 'Blog',
       component: Blog
+    },
+    {
+      path: '/blog/create',
+      name: 'CreateBlog',
+      component: CreateBlog,
+    },
+    {
+      path: '/blog/:blogId',
+      name: 'BlogDetail',
+      component: BlogDetail,
     },
     {
       path: '/heroes',

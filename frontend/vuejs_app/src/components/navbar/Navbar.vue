@@ -6,12 +6,12 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item href="#" class="text-uppercase"><router-link to="/heroes">Heroes</router-link></b-nav-item>
-        <b-nav-item href="#" class="text-uppercase"><router-link to="/locations">Locations</router-link></b-nav-item>
-        <b-nav-item href="#" class="text-uppercase"><router-link to="/items">Items</router-link></b-nav-item>
-        <b-nav-item href="#" class="text-uppercase"><router-link to="/events">Events</router-link></b-nav-item>
-        <b-nav-item href="#" class="text-uppercase"><router-link to="/blog">Blog</router-link></b-nav-item>
-        <b-nav-item href="#" class="text-uppercase"><router-link to="/about">About</router-link></b-nav-item>
+<!--        <b-nav-item href="#" class="text-uppercase"><router-link to="/heroes"><span class="navbar-item-link">Heroes</span></router-link></b-nav-item>-->
+<!--        <b-nav-item href="#" class="text-uppercase"><router-link to="/locations"><span class="navbar-item-link">Locations</span></router-link></b-nav-item>-->
+<!--        <b-nav-item href="#" class="text-uppercase"><router-link to="/items"><span class="navbar-item-link">Items</span></router-link></b-nav-item>-->
+<!--        <b-nav-item href="#" class="text-uppercase"><router-link to="/events"><span class="navbar-item-link">Events</span></router-link></b-nav-item>-->
+        <b-nav-item href="#" class="text-uppercase"><router-link to="/blog"><span class="navbar-item-link">Blog</span></router-link></b-nav-item>
+        <b-nav-item href="#" class="text-uppercase"><router-link to="/about"><span class="navbar-item-link">About</span></router-link></b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
@@ -65,6 +65,18 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+ .navbar-item-link {
+   color: rgba(0, 0, 0, 0.5);
+   text-decoration: none;
 
+   &:active, &:hover {
+     color: rgba(0, 0, 0, 0.7);
+     text-decoration: none;
+   }
+ }
+
+ a {
+   text-decoration: none;
+ }
 </style>
