@@ -19,8 +19,8 @@
 
         <b-nav-item-dropdown text="Lang" right>
           <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">CZ</b-dropdown-item>
+<!--          <b-dropdown-item href="#">RU</b-dropdown-item>-->
+<!--          <b-dropdown-item href="#">CZ</b-dropdown-item>-->
         </b-nav-item-dropdown>
 
         <div v-if="isLogin">

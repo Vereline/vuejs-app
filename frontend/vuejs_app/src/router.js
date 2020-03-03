@@ -12,6 +12,7 @@ import Heroes from './components/heroes/Heroes'
 import Login from './components/login/Login'
 import Signup from './components/signup/Signup'
 import NotFound from './components/notFound/notFound'
+import personProfile from './components/personProfile/personProfile'
 
 Vue.use(Router);
 
@@ -73,7 +74,12 @@ export default new Router({
       name: 'Login',
       component: Login
     },
-        {
+    {
+      path: '/person/:id',
+      name: 'PersonProfile',
+      component: personProfile
+    },
+    {
       path: '*',
       name: 'NotFound',
       component: NotFound
