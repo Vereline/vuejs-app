@@ -44,10 +44,17 @@ class UpdateBlogPost(graphene.Mutation):
 
 
 class BlogQuery(graphene.ObjectType):
+    blog_post = graphene.Field(BlogPostType, id=graphene.Int())
     blog_posts = graphene.List(BlogPostType)
 
     def resolve_blog_posts(self, info):
         return BlogPost.objects.all()
+
+    def resolve_blog_post(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id is not None:
+            return BlogPost.objects.get(pk=id)
+        return None
 
 
 class CommentType(DjangoObjectType):
@@ -88,10 +95,17 @@ class UpdateComment(graphene.Mutation):
 
 
 class CommentQuery(graphene.ObjectType):
+    comment = graphene.Field(CommentType, id=graphene.Int())
     comments = graphene.List(CommentType)
 
     def resolve_comments(self, info):
         return Comment.objects.all()
+
+    def resolve_comment(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id is not None:
+            return Comment.objects.get(pk=id)
+        return None
 
 
 class Mutations(graphene.ObjectType):
