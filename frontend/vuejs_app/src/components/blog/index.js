@@ -1,16 +1,16 @@
-//gql query
+import gql from "graphql-tag"
 
-// const allblog = gql`query allblog {
-//   blogPosts {
-//     id,
-//     title,
-//     fullText,
-//     author {
-//       id,
-//       firstName,
-//       lastName
-//     },
-//     createdAt,
-//     updatedAt
-//   }
-// }'
+export const ALL_BLOG_POSTS = gql`query allBlogPosts {
+  blogPosts {
+    id,
+    title,
+    fullText,
+    author {
+      id,
+      firstName,
+      lastName
+    },
+    createdAt,
+    updatedAt
+  }
+}`;

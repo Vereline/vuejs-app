@@ -3,18 +3,18 @@
     <b-jumbotron class="mt-3">
       <b-row>
         <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-          <img src="https://www.svgimages.com/svg-image/s5/man-passportsize-silhouette-icon-256x256.png" alt="stack photo" class="img"/>
+          <img :src="convertImgSrc(user.photo)" alt="stack photo" class="img img-fluid rounded"/>
         </div>
         <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
           <b-container>
-            <h2>John Doe</h2>
+            <h2 class="center-block">{{ formatUserName(user.firstName, user.lastName) }}</h2>
           </b-container>
           <hr>
             <ul class="container details">
-              <li><p><span style="width:50px;"></span>+91 90000 00000</p></li>
-              <li><p><span style="width:50px;"></span>somerandom@email.com</p></li>
-              <li><p><span style="width:50px;"></span>Hyderabad</p></li>
-              <li><p><span style="width:50px;"></span><a href="#">www.example.com</a></p></li>
+              <li><p><span style="width:50px;"></span>{{"Date of join: " + convertDateFormat(user.birthDate)}}</p></li>
+              <li><p><span style="width:50px;"></span><a :href="`mailto:${user.email}`">{{user.email}}</a></p></li>
+              <li><p><span style="width:50px;"></span>{{"Birth date: " + convertDateFormat(user.birthDate)}}</p></li>
+              <li><p><span style="width:50px;"></span>{{"Activity: " +  (user.isActive ? "Active user" : "Not Active user") }}</p></li>
           </ul>
         </div>
       </b-row>
@@ -23,15 +23,24 @@
 </template>
 
 <script>
+  import { PERSON_PROFILE } from './index'
+  import { API_URL } from "../../constants"
+
+
   export default {
     name: "personProfile",
     data() {
       return {
-        author: {
-          photo: "",
-          username: "",
+        id: this.$route.params.id,
+        user: {
           id: "",
-          createdAt: "",
+          firstName: "",
+          lastName: "",
+          birthDate: "",
+          photo: "",
+          dateJoined: "",
+          isActive: "",
+          email: "",
         },
       }
     },
@@ -39,6 +48,22 @@
       convertDateFormat(date) {
         return date.toString().split('T')[0];
       },
+      formatUserName(firstName, lastName) {
+        return firstName + ' ' + lastName;
+      },
+      convertImgSrc(imagePath) {
+        return API_URL + '/media/' + imagePath
+      },
+    },
+    apollo: {
+      user: {
+        query: PERSON_PROFILE,
+        variables () {
+          return {
+            id: this.id
+          }
+        }
+      }
     },
   }
 </script>

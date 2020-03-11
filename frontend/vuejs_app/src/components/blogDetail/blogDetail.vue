@@ -2,42 +2,65 @@
   <b-container>
     <b-row>
       <div class="col-lg-8">
-        <h1>Title</h1>
+        <h1>{{ blogPost.title }}</h1>
         <p class="lead">
-          By <router-link :to="{ name: 'PersonProfile', params: {id: author.id }}">{{ author.name }}</router-link>
+          By <router-link :to="{ name: 'PersonProfile', params: {id: blogPost.author.id }}">
+          {{ formatAuthorName(blogPost.author.firstName, blogPost.author.lastName) }}
+        </router-link>
         </p>
         <hr/>
-          <p>Posted on {{convertDateFormat(news.createdAt)}}</p>
+          <p>Posted on {{convertDateFormat(blogPost.createdAt)}}</p>
           <hr/>
-          <p>Updated on {{convertDateFormat(news.updatedAt)}}</p>
+          <p>Updated on {{convertDateFormat(blogPost.updatedAt)}}</p>
           <div>
             <div>
-              <img class="img-fluid rounded" :src="news.titleImage" alt="Title Image" />
-              <hr/>
+              <img class="img-fluid rounded" :src="convertImgSrc(blogPost.image)" alt="Title Image" />
+<!--              <hr/>-->
             </div>
           </div>
-          <p class="lead main-text">{{ news.description }}</p>
+          <p class="lead main-text mt-4">{{ blogPost.fullText }}</p>
       </div>
     </b-row>
   </b-container>
 </template>
 
 <script>
+  import { BLOG_DETAIL } from "./index"
+  import { API_URL } from "../../constants"
+
   export default {
     name: "blogDetail",
+    //   beforeRouteEnter (to, from, next) {
+    //   next(vm => {
+    //     vm.id = to.params.id
+    //   })
+    // },
     data() {
       return {
-        commentText: "",
-        news: {
+        id: this.$route.params.blogId,
+        comments: {
           id: "",
-          titleImage: "",
+          text: "",
           createdAt: "",
           updatedAt: "",
-          description: "jfjhdefrgk suejrygfkjrhg seruyg hsgrjs hyerguiysergsleruyg sher,jg ",
+          author: {
+            id: "",
+            firstName: "",
+            lastName: "",
+          },
         },
-        author: {
+        blogPost: {
           id: "",
-          name: "",
+          title: "",
+          createdAt: "",
+          updatedAt: "",
+          fullText: "",
+          image: "",
+          author: {
+            id: "",
+            firstName: "",
+            lastName: "",
+          },
         },
       }
     },
@@ -45,6 +68,22 @@
       convertDateFormat(date) {
         return date.toString().split('T')[0];
       },
+      convertImgSrc(imagePath) {
+        return API_URL + '/media/' + imagePath
+      },
+      formatAuthorName(firstName, lastName) {
+        return firstName + ' ' + lastName
+      },
+    },
+    apollo: {
+      blogPost: {
+        query: BLOG_DETAIL,
+        variables () {
+          return {
+            id: this.id
+          }
+        }
+      }
     },
   }
 </script>
