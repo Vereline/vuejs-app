@@ -1,8 +1,13 @@
 // const persprofile = gql`
-// query getUser {
-//   user(id: 1) {
-//     id
-//     firstName
-//     lastName
+// query userDetailQuery($id: Int!) {
+//   user(id: $id) {
+//     id,
+//     firstName,
+//     lastName,
+//     birthDate,
+//     photo,
+//     dateJoined,
+//     isActive
 //   }
+// }
 // `;

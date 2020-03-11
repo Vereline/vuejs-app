@@ -3,6 +3,7 @@
 //     id,
 //     title,
 //     fullText,
+//     photo,
 //     author {
 //       id,
 //       firstName,
