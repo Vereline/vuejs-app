@@ -60,7 +60,10 @@
     computed : {
       isLogin () {
         return this.$store.state.isLogin
-      }
+      },
+      userId () {
+        return this.$store.state.id
+      },
     },
     data () {
       return {

@@ -6,8 +6,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     // put variables and collections here
-    token: '',
+    token: "",
     isLogin: false,
+    id: "",
+    username: "",
   },
   mutations: {
     // put synchronous functions for changing state e.g. add, edit, delete
@@ -19,6 +21,12 @@ export default new Vuex.Store({
     },
     setIsLogout(state) {
       state.isLogin = false
+    },
+    setUsername(state, username) {
+      state.username = username
+    },
+    setId(state, id) {
+      state.id = id
     },
 
   },

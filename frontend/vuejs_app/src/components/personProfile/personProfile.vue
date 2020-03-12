@@ -52,7 +52,9 @@
         return firstName + ' ' + lastName;
       },
       convertImgSrc(imagePath) {
-        return API_URL + '/media/' + imagePath
+        if (imagePath)
+          return API_URL + '/media/' + imagePath
+        return ""
       },
     },
     apollo: {

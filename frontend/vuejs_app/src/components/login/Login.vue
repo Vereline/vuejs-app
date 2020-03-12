@@ -55,14 +55,18 @@
 </template>
 
 <script>
-  import login from "./index"
+  import {login, getProfileData} from "./index"
   export default {
     name: "LoginModal",
     methods: {
       loginUser() {
         login(this.username, this.password).then((data) => {
         if (data.status === 200) {
-          this.closeModal()
+          getProfileData().then((data) => {
+            if (data.status === 200) {
+              this.closeModal()
+            }
+          })
         }
         else if (data.status === 400) {
           this.errorMessage = data.errorMessage;
