@@ -9,19 +9,26 @@
         </router-link>
         </p>
         <hr/>
-          <p>Posted on {{convertDateFormat(blogPost.createdAt)}}</p>
-          <hr/>
-          <p>Updated on {{convertDateFormat(blogPost.updatedAt)}}</p>
+        <p class="text-right">Posted on {{convertDateFormat(blogPost.createdAt)}}</p>
+        <p class="text-right">Updated on {{convertDateFormat(blogPost.updatedAt)}}</p>
+        <hr/>
+        <div>
           <div>
-            <div>
-              <img class="img-fluid rounded" :src="convertImgSrc(blogPost.image)" alt="Title Image" />
-            </div>
+            <img class="img-fluid rounded" :src="convertImgSrc(blogPost.image)" alt="Title Image" />
           </div>
-          <p class="lead main-text mt-4">{{ blogPost.fullText }}</p>
-          <hr/>
-          <Comment v-for="(comment, key) in comments"></Comment>
+        </div>
+        <p class="lead main-text mt-4">{{ blogPost.fullText }}</p>
+        <hr/>
+        <h4 class="text-uppercase mb-3">Comments</h4>
+        <div v-for="(comment, key) in blogPost.comments">
+          <comment v-bind:comment="comment"
+                   v-bind:blog-post-id="id"
+                   v-bind:author="comment.author">
+          </comment>
+        </div>
 
         <!-- Comment form -->
+        <comment-form class="mt-4" v-bind:blog-post-id="id"></comment-form>
       </div>
     </b-row>
   </b-container>
@@ -31,9 +38,11 @@
   import { BLOG_DETAIL } from "./index"
   import { API_URL } from "../../constants"
   import Comment from "../comment/Comment";
+  import commentForm from "../commentForm/commentForm";
 
   export default {
     name: "blogDetail",
+    components: {commentForm, Comment},
     //   beforeRouteEnter (to, from, next) {
     //   next(vm => {
     //     vm.id = to.params.id
@@ -42,17 +51,6 @@
     data() {
       return {
         id: this.$route.params.blogId,
-        comments: {
-          id: "",
-          text: "",
-          createdAt: "",
-          updatedAt: "",
-          author: {
-            id: "",
-            firstName: "",
-            lastName: "",
-          },
-        },
         blogPost: {
           id: "",
           title: "",
@@ -64,7 +62,22 @@
             id: "",
             firstName: "",
             lastName: "",
+            photo: "",
           },
+          comments: [
+            {
+              id: "",
+              text: "",
+              createdAt: "",
+              updatedAt: "",
+              author: {
+                id: "",
+                firstName: "",
+                lastName: "",
+                photo: "",
+              },
+            }
+          ],
         },
       }
     },
@@ -73,7 +86,9 @@
         return date.toString().split('T')[0];
       },
       convertImgSrc(imagePath) {
-        return API_URL + '/media/' + imagePath
+        if (imagePath)
+          return API_URL + '/media/' + imagePath;
+        return ""
       },
       formatAuthorName(firstName, lastName) {
         return firstName + ' ' + lastName

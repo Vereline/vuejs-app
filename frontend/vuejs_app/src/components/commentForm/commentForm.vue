@@ -1,20 +1,21 @@
 <template>
-  <b-container>
+  <b-container >
     <b-row>
       <div class="col-lg-8">
-        <b-card class="my-4 text-left">
-          <h5 class="card-header">Comment header</h5>
+        <b-card class="mb-3 text-left">
+          <div class="text-uppercase card-header"><h5>Leave a comment</h5></div>
           <b-card-body>
             <b-form>
               <b-form-group>
                 <b-textarea class="form-control"
-                          rows={3}
-                          value={{commentText}}
-                          required>
+                            rows={3}
+                            placeholder="Enter something..."
+                            v-model="commentText"
+                            required>
                 </b-textarea>
               </b-form-group>
               <b-button type="submit"
-                      class="btn btn-success align-content-end">
+                        class="btn btn-success align-content-end float-right">
                   Submit
               </b-button>
             </b-form>
@@ -28,17 +29,24 @@
 <script>
     export default {
       name: "commentForm",
+      props: {
+        blogPostId: String,
+      },
       data() {
         return {
           commentText: "",
-          newsId: "",
         }
       },
       methods: {
+      },
+      apollo: {
+
       },
     }
 </script>
 
 <style scoped lang="scss">
-
+  .card-header {
+    background-color: inherit;
+  }
 </style>

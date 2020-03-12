@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue';
+import VueI18n from 'vue-i18n';
 
 import './styles/bootswatch_flatly.scss';
 // import './styles/bootswatch_darkly.scss';
@@ -10,6 +11,7 @@ import store from './store'
 import apolloProvider from './apollo-client'
 
 Vue.use(BootstrapVue);
+Vue.use(VueI18n);
 
 new Vue({
   el: '#app',

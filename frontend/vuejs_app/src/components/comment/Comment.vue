@@ -25,7 +25,7 @@
         text: String,
         createdAt: String,
       },
-      newsId: String,
+      blogPostId: String,
       author: {
         photo: String,
         firstName: String,
@@ -35,17 +35,17 @@
     },
     data() {
       return {
-        comment: {
-            text: "",
-            createdAt: "",
-        },
-        newsId: "",
-        author: {
-          photo: "",
-          firstName: "",
-          lastName: "",
-          id: "",
-        },
+        // comment: {
+        //     text: "",
+        //     createdAt: "",
+        // },
+        // blogPostId: "",
+        // author: {
+        //   photo: "",
+        //   firstName: "",
+        //   lastName: "",
+        //   id: "",
+        // },
       }
     },
     methods: {
@@ -56,7 +56,9 @@
         return firstName + ' ' + lastName
       },
       convertImgSrc(imagePath) {
-        return API_URL + '/media/' + imagePath
+        if (imagePath)
+          return API_URL + '/media/' + imagePath;
+        return ""
       },
     },
   }
@@ -66,5 +68,9 @@
   .author-photo {
     width: 50px;
     height: 50px;
+  }
+
+  .card-header {
+    background-color: inherit;
   }
 </style>

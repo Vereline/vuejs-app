@@ -17,10 +17,18 @@
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
 
+        <div class="theme-switch-wrapper">
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+          </label>
+          <em>Enable Dark Mode!</em>
+        </div>
+
         <b-nav-item-dropdown text="Lang" right>
           <b-dropdown-item href="#">EN</b-dropdown-item>
-<!--          <b-dropdown-item href="#">RU</b-dropdown-item>-->
-<!--          <b-dropdown-item href="#">BY</b-dropdown-item>-->
+          <b-dropdown-item href="#">RU</b-dropdown-item>
+          <b-dropdown-item href="#">BY</b-dropdown-item>
         </b-nav-item-dropdown>
 
         <div v-if="isLogin">
@@ -86,4 +94,65 @@
  a {
    text-decoration: none;
  }
+
+  /*Simple css to style it like a toggle switch*/
+  .theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+
+    em {
+      margin-left: 10px;
+      font-size: 1rem;
+    }
+  }
+
+  .theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+
+    input {
+      display:none;
+    }
+  }
+
+  .slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+
+    &:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+    }
+  }
+
+  input:checked + .slider {
+    background-color: #66bb6a;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+
+  .slider.round {
+    border-radius: 34px;
+
+    &:before {
+      border-radius: 50%;
+    }
+  }
+
 </style>

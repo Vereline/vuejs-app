@@ -9,7 +9,8 @@ export const BLOG_DETAIL = gql`query blogPostQuery($id: Int!) {
     author {
       id,
       firstName,
-      lastName
+      lastName,
+      photo
     },
     createdAt,
     updatedAt,
@@ -21,7 +22,8 @@ export const BLOG_DETAIL = gql`query blogPostQuery($id: Int!) {
       author {
         id,
         firstName,
-        lastName
+        lastName,
+        photo
     	},
     }
   }

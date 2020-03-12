@@ -53,7 +53,7 @@
       },
       convertImgSrc(imagePath) {
         if (imagePath)
-          return API_URL + '/media/' + imagePath
+          return API_URL + '/media/' + imagePath;
         return ""
       },
     },

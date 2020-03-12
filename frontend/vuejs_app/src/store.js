@@ -10,6 +10,8 @@ export default new Vuex.Store({
     isLogin: false,
     id: "",
     username: "",
+    siteTheme: "light",
+    locale: "en",
   },
   mutations: {
     // put synchronous functions for changing state e.g. add, edit, delete
@@ -28,7 +30,9 @@ export default new Vuex.Store({
     setId(state, id) {
       state.id = id
     },
+    setSiteTheme(state, theme) {
 
+    },
   },
   actions: {
     // put asynchronous functions that can call one or more mutation functions
