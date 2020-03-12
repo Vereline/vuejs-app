@@ -20,7 +20,7 @@
         <b-nav-item-dropdown text="Lang" right>
           <b-dropdown-item href="#">EN</b-dropdown-item>
 <!--          <b-dropdown-item href="#">RU</b-dropdown-item>-->
-<!--          <b-dropdown-item href="#">CZ</b-dropdown-item>-->
+<!--          <b-dropdown-item href="#">BY</b-dropdown-item>-->
         </b-nav-item-dropdown>
 
         <div v-if="isLogin">
@@ -36,6 +36,7 @@
         </div>
         <div v-else>
           <b-nav-item href="#" v-b-modal.login-modal>Log In</b-nav-item>
+          <b-nav-item href="#" v-b-modal.signup-modal>Sign Up</b-nav-item>
         </div>
       </b-navbar-nav>
     </b-collapse>
@@ -46,11 +47,14 @@
 
 <script>
   import LoginModal from "../login/Login";
+  import SignupModal from "../signup/Signup";
   import store from '../../store';
+
   export default {
     name: "Navbar",
     components: {
-        'login-modal': LoginModal
+        'login-modal': LoginModal,
+        'signup-modal': SignupModal,
     },
     store,
     computed : {

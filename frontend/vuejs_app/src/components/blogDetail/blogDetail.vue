@@ -15,10 +15,13 @@
           <div>
             <div>
               <img class="img-fluid rounded" :src="convertImgSrc(blogPost.image)" alt="Title Image" />
-<!--              <hr/>-->
             </div>
           </div>
           <p class="lead main-text mt-4">{{ blogPost.fullText }}</p>
+          <hr/>
+          <Comment v-for="(comment, key) in comments"></Comment>
+
+        <!-- Comment form -->
       </div>
     </b-row>
   </b-container>
@@ -27,6 +30,7 @@
 <script>
   import { BLOG_DETAIL } from "./index"
   import { API_URL } from "../../constants"
+  import Comment from "../comment/Comment";
 
   export default {
     name: "blogDetail",
@@ -73,6 +77,9 @@
       },
       formatAuthorName(firstName, lastName) {
         return firstName + ' ' + lastName
+      },
+      addComment() {
+        // push()
       },
     },
     apollo: {
