@@ -8,13 +8,19 @@ const messages = {
   en: {
     navbarMessages: {
       blog: 'Blog',
-      about: 'About'
+      about: 'About',
+      login: 'Log in',
+      signup: 'Sign Up',
+      lang: 'Lang',
     }
   },
   ru: {
     navbarMessages: {
       blog: 'Блог',
-      about: 'О сайте'
+      about: 'О сайте',
+      login: 'Логин',
+      signup: 'Регистрация',
+      lang: 'Язык',
     }
   },
   // by: {
@@ -26,7 +32,10 @@ const messages = {
 };
 
 // Create VueI18n instance with options
-export default new VueI18n({
+const i18n = new VueI18n({
   locale: 'en', // set locale
+  fallbackLocale: 'en', // set locale
   messages, // set locale messages
 });
+
+export default i18n

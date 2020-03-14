@@ -10,8 +10,8 @@
 <!--        <b-nav-item href="#" class="text-uppercase"><router-link to="/locations"><span class="navbar-item-link">Locations</span></router-link></b-nav-item>-->
 <!--        <b-nav-item href="#" class="text-uppercase"><router-link to="/items"><span class="navbar-item-link">Items</span></router-link></b-nav-item>-->
 <!--        <b-nav-item href="#" class="text-uppercase"><router-link to="/events"><span class="navbar-item-link">Events</span></router-link></b-nav-item>-->
-        <b-nav-item href="#" class="text-uppercase"><router-link to="/blog"><span class="navbar-item-link">Blog</span></router-link></b-nav-item>
-        <b-nav-item href="#" class="text-uppercase"><router-link to="/about"><span class="navbar-item-link">About</span></router-link></b-nav-item>
+        <b-nav-item href="#" class="text-uppercase"><router-link to="/blog" tag="li"><span class="navbar-item-link">{{ $t("navbarMessages.blog") }}</span></router-link></b-nav-item>
+        <b-nav-item href="#" class="text-uppercase"><router-link to="/about" tag="li"><span class="navbar-item-link">{{ $t("navbarMessages.about") }}</span></router-link></b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
@@ -22,13 +22,19 @@
             <input type="checkbox" id="checkbox" />
             <div class="slider round" v-on:click="darkMode = !darkMode"/>
           </label>
-<!--          <em>Enable Dark Mode!</em>-->
         </div>
 
-        <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">BY</b-dropdown-item>
+        <b-nav-item-dropdown right>
+          <template v-slot:button-content>
+            {{ $t("navbarMessages.lang") }}
+          </template>
+          <b-dropdown-item  class="text-uppercase"
+                            v-for="(lang, i) in locales"
+                            :key="`Lang${i}`"
+                            :value="lang"
+                            v-on:click="changeLocale(lang)">
+            {{ lang }}
+          </b-dropdown-item>
         </b-nav-item-dropdown>
 
         <div v-if="isLogin">
@@ -43,8 +49,8 @@
           </b-nav-item-dropdown>
         </div>
         <div v-else>
-          <b-nav-item href="#" v-b-modal.login-modal>Log In</b-nav-item>
-          <b-nav-item href="#" v-b-modal.signup-modal>Sign Up</b-nav-item>
+          <b-nav-item href="#" v-b-modal.login-modal>{{ $t("navbarMessages.login") }}</b-nav-item>
+          <b-nav-item href="#" v-b-modal.signup-modal>{{ $t("navbarMessages.signup") }}</b-nav-item>
         </div>
       </b-navbar-nav>
     </b-collapse>
@@ -57,6 +63,7 @@
   import LoginModal from "../login/Login";
   import SignupModal from "../signup/Signup";
   import store from '../../store';
+  import $i18n from '../../locales';
 
   export default {
     name: "Navbar",
@@ -65,6 +72,7 @@
         'signup-modal': SignupModal,
     },
     store,
+    $i18n,
     computed : {
       isLogin () {
         return this.$store.state.isLogin
@@ -76,6 +84,8 @@
     data () {
       return {
         darkMode: false,
+        locales: ['en', 'ru'],
+        // locales: ['en', 'ru', 'by'],
       }
     },
     mounted() {
@@ -106,19 +116,24 @@
         }
       }
     },
+    methods: {
+      changeLocale: function (locale) {
+        $i18n.locale = locale;
+      },
+    },
   }
 </script>
 
 <style scoped lang="scss">
- .navbar-item-link {
-   color: rgba(0, 0, 0, 0.5);
-   text-decoration: none;
+ /*.navbar-item-link {*/
+ /*  color: rgba(0, 0, 0, 0.5);*/
+ /*  text-decoration: none;*/
 
-   &:active, &:hover {
-     color: rgba(0, 0, 0, 0.7);
-     text-decoration: none;
-   }
- }
+ /*  &:active, &:hover {*/
+ /*    color: rgba(0, 0, 0, 0.7);*/
+ /*    text-decoration: none;*/
+ /*  }*/
+ /*}*/
 
  a {
    text-decoration: none;
