@@ -83,7 +83,9 @@
     },
     methods: {
       convertDateFormat(date) {
-        return date.toString().split('T')[0];
+        if (date)
+          return date.toString().split('T')[0];
+        return ""
       },
       convertImgSrc(imagePath) {
         if (imagePath)

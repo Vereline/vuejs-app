@@ -122,6 +122,8 @@
 
 <script>
   import store from '../../store';
+  import {getProfileData} from "../login/index"
+  import {signup} from "./index"
 
   export default {
     name: "SignupModal",
@@ -130,10 +132,23 @@
         let signupData = {
           username: this.username,
           email: this.email,
-          firstName: this.firstName,
-          lastName: this.lastName,
+          first_name: this.firstName,
+          last_name: this.lastName,
           password: this.password,
-        }
+        };
+
+        signup(signupData).then((data) => {
+          if (data.status >= 200 && data.status < 300) {
+            getProfileData().then((data) => {
+              if (data.status >= 200 && data.status < 300) {
+                this.closeModal()
+              }
+            })
+          }
+          else if (data.status === 400) {
+            this.errorMessage = data.errorMessage;
+          }
+        });
       },
       closeModal(e) {
         store.commit('setCloseSignupModal');

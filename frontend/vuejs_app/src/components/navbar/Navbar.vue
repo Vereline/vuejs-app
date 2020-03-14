@@ -10,7 +10,7 @@
 <!--        <b-nav-item href="#" class="text-uppercase"><router-link to="/locations"><span class="navbar-item-link">Locations</span></router-link></b-nav-item>-->
 <!--        <b-nav-item href="#" class="text-uppercase"><router-link to="/items"><span class="navbar-item-link">Items</span></router-link></b-nav-item>-->
 <!--        <b-nav-item href="#" class="text-uppercase"><router-link to="/events"><span class="navbar-item-link">Events</span></router-link></b-nav-item>-->
-        <b-nav-item href="#" class="text-uppercase"><router-link to="/blog" tag="li"><span class="navbar-item-link">{{ $t("navbarMessages.blog") }}</span></router-link></b-nav-item>
+        <b-nav-item v-if="isLogin" href="#" class="text-uppercase"><router-link to="/blog" tag="li"><span class="navbar-item-link">{{ $t("navbarMessages.blog") }}</span></router-link></b-nav-item>
         <b-nav-item href="#" class="text-uppercase"><router-link to="/about" tag="li"><span class="navbar-item-link">{{ $t("navbarMessages.about") }}</span></router-link></b-nav-item>
       </b-navbar-nav>
 
@@ -53,10 +53,12 @@
           </b-nav-item-dropdown>
         </div>
         <div v-else>
-          <b-nav-item href="#" v-on:click="openLoginModal">{{ $t("navbarMessages.login") }}</b-nav-item>
-          <b-nav-item href="#" v-on:click="openSignupModal">{{ $t("navbarMessages.signup") }}</b-nav-item>
-<!--          <b-nav-item href="#" v-b-modal.login-modal>{{ $t("navbarMessages.login") }}</b-nav-item>-->
-<!--          <b-nav-item href="#" v-b-modal.signup-modal>{{ $t("navbarMessages.signup") }}</b-nav-item>-->
+          <b-navbar-nav>
+            <b-nav-item href="#" v-on:click="openLoginModal">{{ $t("navbarMessages.login") }}</b-nav-item>
+            <b-nav-item href="#" v-on:click="openSignupModal">{{ $t("navbarMessages.signup") }}</b-nav-item>
+<!--            <b-nav-item href="#" v-b-modal.login-modal>{{ $t("navbarMessages.login") }}</b-nav-item>-->
+<!--            <b-nav-item href="#" v-b-modal.signup-modal>{{ $t("navbarMessages.signup") }}</b-nav-item>-->
+          </b-navbar-nav>
         </div>
       </b-navbar-nav>
     </b-collapse>

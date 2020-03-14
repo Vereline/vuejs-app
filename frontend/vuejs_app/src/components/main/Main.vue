@@ -89,13 +89,6 @@
     <!--        </b-row>-->
     <!--      </b-container>-->
     <!--    </footer>-->
-
-    <!-- Copyright Section -->
-    <section class="copyright py-4 text-center text-white bg-primary">
-      <b-container>
-        <small>Now I dont have a Copyright &copy; Elven Scroll 2019</small>
-      </b-container>
-    </section>
   </div>
 </template>
 

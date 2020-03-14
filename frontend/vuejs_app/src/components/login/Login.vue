@@ -69,9 +69,9 @@
     methods: {
       loginUser() {
         login(this.username, this.password).then((data) => {
-        if (data.status === 200) {
+        if (data.status >= 200 && data.status < 300) {
           getProfileData().then((data) => {
-            if (data.status === 200) {
+            if (data.status >= 200 && data.status < 300) {
               this.closeModal()
             }
           })

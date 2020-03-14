@@ -20,7 +20,7 @@
       </b-card-body>
     </b-card>
 
-    <b-button variant="success" class="mt-3 float-right">
+    <b-button v-if="isAdmin" variant="success" class="mt-3 float-right">
       <router-link :to="{ name: 'CreateBlog' }">
        Create Blog
       </router-link>
@@ -51,10 +51,16 @@
         formatFullText(fullText) {
           return fullText.length <= this.maxLength ? fullText: fullText.toString().substring(0, this.maxLength) + "..."
         },
-        formatDate(date){
+        formatDate(date) {
+          if (date)
             return date.toString().split('T')[0];
+          return ""
         },
-
+      },
+      computed: {
+        isAdmin() {
+          return this.$store.state.isAdmin
+        },
       },
       apollo: {
         blogPosts: {

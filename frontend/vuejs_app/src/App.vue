@@ -4,6 +4,13 @@
     <!-- Navbar -->
       <navbar :isLogin="isLoginUser"></navbar>
       <router-view></router-view>
+      <!-- Copyright Section -->
+      <div class="mb-3"></div>
+      <section class="copyright py-4 text-center text-white bg-primary">
+        <b-container>
+          <small>Now I dont have a Copyright &copy; Elven Scroll 2019</small>
+        </b-container>
+      </section>
     </div>
   </div>
 </template>

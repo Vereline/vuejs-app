@@ -52,6 +52,8 @@ export function getProfileData(){
       store.commit('setUsername', response.data['username']);
       store.commit('setFirstName', response.data['first_name']);
       store.commit('setLastName', response.data['last_name']);
+      if (response.data['is_staff'])
+        store.commit('setIsAdmin');
       return {status: response.status, errorMessage: ''};
     })
     .catch(error => {

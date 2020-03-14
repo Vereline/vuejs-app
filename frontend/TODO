@@ -102,3 +102,15 @@ a {
 
 # TODO: sort dev dependencies and prod dependencies in package.json
 # TODO: half of app is vuex + DRF, other half is GraphQL vue-apollo + graphene django
+
+
+username: "lolkek"
+email: "lolkek@lol.com"
+firstName: "Lol"
+lastName: "Kek"
+password: "12345"
+
+!! nginx deployment
+https://cli.vuejs.org/guide/deployment.html#docker-nginx
+
+mobile version is useless, because vue has it's own mobile kits

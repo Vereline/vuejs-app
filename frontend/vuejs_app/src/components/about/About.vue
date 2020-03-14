@@ -12,23 +12,15 @@
     <section id="team">
       <h2 class="m-auto our-team">Our Team</h2>
       <b-row>
-        <b-col>
+        <b-col v-for="(user, i) in users"
+               :key="`User${i}`"
+               :value="user">
           <b-card class="card mt-2">
             <img src="https://via.placeholder.com/300" alt="John" style="width:100%">
-            <h1>John Doe</h1>
-            <p class="title">CEO & Founder, Example</p>
+            <h1>{{fullName(user.firstName, user.lastName)}}</h1>
+            <p class="title">{{user.job}}</p>
             <p>Harvard University</p>
-            <p><button>Contact</button></p>
-          </b-card>
-        </b-col>
-
-        <b-col>
-          <b-card class="card mt-2">
-            <img src="https://via.placeholder.com/300" alt="John" style="width:100%">
-            <h1>John Doe</h1>
-            <p class="title">CEO & Founder, Example</p>
-            <p>Harvard University</p>
-            <p><button>Contact</button></p>
+            <p><b-button class="btn-success">Contact</b-button></p>
           </b-card>
         </b-col>
       </b-row>
@@ -41,8 +33,27 @@
       name: "About",
       data() {
         return {
+          users: [
+            {
+              firstName: "Johnatan",
+              lastName: "Doe",
+              id: "1",
+              job: "CEO & Founder, Example",
+            },
+            {
+              firstName: "Viktoryia",
+              lastName: "Stanko",
+              id: "2",
+              job: "Software Developer",
+            },
+          ],
         }
-      }
+      },
+      methods: {
+        fullName(firstName, lastName) {
+          return firstName + ' ' + lastName
+        },
+      },
     }
 </script>
 
@@ -95,16 +106,16 @@
     outline: 0;
     display: inline-block;
     padding: 8px;
-    color: white;
-    background-color: #000;
+    /*color: white;*/
+    /*background-color: #000;*/
     text-align: center;
     cursor: pointer;
     width: 100%;
     font-size: 18px;
 
-    &:hover{
-       opacity: 0.7;
-    }
+    /*&:hover{*/
+    /*   opacity: 0.7;*/
+    /*}*/
   }
 
   a {

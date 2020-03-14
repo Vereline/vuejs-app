@@ -8,6 +8,7 @@ export default new Vuex.Store({
     // put variables and collections here
     token: "",
     isLogin: false,
+    isAdmin: false,
     id: "",
     username: "",
     siteTheme: "light",
@@ -27,6 +28,12 @@ export default new Vuex.Store({
     },
     setIsLogout(state) {
       state.isLogin = false
+    },
+    setIsAdmin(state) {
+      state.isAdmin = true
+    },
+    setIsNotAdmin(state) {
+      state.isAdmin = false
     },
     setOpenSignupModal(state) {
       state.openedSignupModal = true
@@ -59,6 +66,7 @@ export default new Vuex.Store({
   actions: {
     logout(context) {
       context.commit('setIsLogout');
+      context.commit('setIsNotAdmin');
       context.commit('setLastName', "");
       context.commit('setFirstName', "");
       context.commit('setId', "");

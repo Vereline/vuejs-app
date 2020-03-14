@@ -9,7 +9,7 @@ const messages = {
     navbarMessages: {
       blog: 'Blog',
       about: 'About',
-      login: 'Log in',
+      login: 'Log In',
       signup: 'Sign Up',
       lang: 'Lang',
     }
