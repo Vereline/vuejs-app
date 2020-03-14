@@ -41,20 +41,27 @@
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
-              <em>User</em>
+              <em>{{ fullName }}</em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item href="#">
+              <router-link :to="{ name: 'PersonProfile', params: {id: userId }}" tag="li">
+                <span class="navbar-item-link">Profile</span>
+              </router-link>
+            </b-dropdown-item>
+            <b-dropdown-item href="#" v-on:click="signOut">Sign Out</b-dropdown-item>
 
           </b-nav-item-dropdown>
         </div>
         <div v-else>
-          <b-nav-item href="#" v-b-modal.login-modal>{{ $t("navbarMessages.login") }}</b-nav-item>
-          <b-nav-item href="#" v-b-modal.signup-modal>{{ $t("navbarMessages.signup") }}</b-nav-item>
+          <b-nav-item href="#" v-on:click="openLoginModal">{{ $t("navbarMessages.login") }}</b-nav-item>
+          <b-nav-item href="#" v-on:click="openSignupModal">{{ $t("navbarMessages.signup") }}</b-nav-item>
+<!--          <b-nav-item href="#" v-b-modal.login-modal>{{ $t("navbarMessages.login") }}</b-nav-item>-->
+<!--          <b-nav-item href="#" v-b-modal.signup-modal>{{ $t("navbarMessages.signup") }}</b-nav-item>-->
         </div>
       </b-navbar-nav>
     </b-collapse>
 
+    <signup-modal></signup-modal>
     <login-modal></login-modal>
   </b-navbar>
 </template>
@@ -79,6 +86,9 @@
       },
       userId () {
         return this.$store.state.id
+      },
+      fullName () {
+          return this.$store.state.firstName + ' ' + this.$store.state.lastName;
       },
     },
     data () {
@@ -119,6 +129,15 @@
     methods: {
       changeLocale: function (locale) {
         $i18n.locale = locale;
+      },
+      signOut: function() {
+        store.dispatch("logout");
+      },
+      openLoginModal: function () {
+        store.commit('setOpenLoginModal');
+      },
+      openSignupModal: function () {
+        store.commit('setOpenSignupModal');
       },
     },
   }

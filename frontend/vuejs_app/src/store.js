@@ -12,6 +12,10 @@ export default new Vuex.Store({
     username: "",
     siteTheme: "light",
     locale: "en",
+    firstName: "",
+    lastName: "",
+    openedLoginModal: false,
+    openedSignupModal: false,
   },
   mutations: {
     // put synchronous functions for changing state e.g. add, edit, delete
@@ -24,17 +28,43 @@ export default new Vuex.Store({
     setIsLogout(state) {
       state.isLogin = false
     },
+    setOpenSignupModal(state) {
+      state.openedSignupModal = true
+    },
+    setCloseSignupModal(state) {
+      state.openedSignupModal = false
+    },
+    setOpenLoginModal(state) {
+      state.openedLoginModal = true
+    },
+    setCloseLoginModal(state) {
+      state.openedLoginModal = false
+    },
     setUsername(state, username) {
       state.username = username
     },
     setId(state, id) {
       state.id = id
     },
+    setFirstName(state, firstName) {
+      state.firstName = firstName
+    },
+    setLastName(state, lastName) {
+      state.lastName = lastName
+    },
     setSiteTheme(state, theme) {
       state.siteTheme = theme
     },
   },
   actions: {
+    logout(context) {
+      context.commit('setIsLogout');
+      context.commit('setLastName', "");
+      context.commit('setFirstName', "");
+      context.commit('setId', "");
+      context.commit('setUsername', "");
+      context.commit('setToken', "");
+    }
     // put asynchronous functions that can call one or more mutation functions
   }
 })

@@ -121,7 +121,7 @@ router.beforeEach((to, from, next) => {
     };
     axios.post(options.url, options.data, options)
       .then(response => {
-        if(response.status === 201) {
+        if(response.status >= 200 && response.status < 300) {
           store.commit('setToken', response.data['token']);
           next();
         } else {

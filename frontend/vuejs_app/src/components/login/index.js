@@ -50,6 +50,8 @@ export function getProfileData(){
     .then(response => {
       store.commit('setId', response.data['id']);
       store.commit('setUsername', response.data['username']);
+      store.commit('setFirstName', response.data['first_name']);
+      store.commit('setLastName', response.data['last_name']);
       return {status: response.status, errorMessage: ''};
     })
     .catch(error => {
