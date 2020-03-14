@@ -10,17 +10,20 @@
 
 <script>
 import Navbar from "./components/navbar/Navbar";
+import store from './store';
+
 export default {
   name: 'app',
   components: {
-      'navbar': Navbar
+    'navbar': Navbar
   },
+  store,
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       isLoginUser: false,
     }
-  }
+  },
 }
 </script>
 

@@ -31,7 +31,7 @@ export default new Vuex.Store({
       state.id = id
     },
     setSiteTheme(state, theme) {
-
+      state.siteTheme = theme
     },
   },
   actions: {

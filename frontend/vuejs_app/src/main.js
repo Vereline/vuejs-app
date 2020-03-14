@@ -3,7 +3,7 @@ import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue';
 import VueI18n from 'vue-i18n';
 
-import './styles/bootswatch_flatly.scss';
+import './styles/theme_colors.scss';
 // import './styles/bootswatch_darkly.scss';
 
 import router from './router'

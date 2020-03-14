@@ -20,9 +20,9 @@
         <div class="theme-switch-wrapper">
           <label class="theme-switch" for="checkbox">
             <input type="checkbox" id="checkbox" />
-            <div class="slider round"></div>
+            <div class="slider round" v-on:click="darkMode = !darkMode"/>
           </label>
-          <em>Enable Dark Mode!</em>
+<!--          <em>Enable Dark Mode!</em>-->
         </div>
 
         <b-nav-item-dropdown text="Lang" right>
@@ -75,8 +75,37 @@
     },
     data () {
       return {
+        darkMode: false,
       }
-    }
+    },
+    mounted() {
+      // check for active theme
+      let htmlElement = document.documentElement;
+      let theme = this.$store.state.siteTheme;
+
+      if (theme === 'dark') {
+        htmlElement.setAttribute('theme', 'dark');
+        this.darkMode = true
+      } else {
+        htmlElement.setAttribute('theme', 'light');
+        this.darkMode = false
+      }
+    },
+    watch: {
+      darkMode: function () {
+        // add/remove class to/from html tag
+        // get :root element
+        let htmlElement = document.documentElement;
+
+        if (this.darkMode) {
+          store.commit('setSiteTheme', 'dark');
+          htmlElement.setAttribute('theme', 'dark');
+        } else {
+          store.commit('setSiteTheme', 'light');
+          htmlElement.setAttribute('theme', 'light');
+        }
+      }
+    },
   }
 </script>
 
