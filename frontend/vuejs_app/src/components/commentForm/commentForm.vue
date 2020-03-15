@@ -27,22 +27,27 @@
 </template>
 
 <script>
-    export default {
-      name: "commentForm",
-      props: {
-        blogPostId: String,
-      },
-      data() {
-        return {
-          commentText: "",
-        }
-      },
-      methods: {
-      },
-      apollo: {
+  import {COMMENT_ADD, COMMENT_UPDATE} from './index'
 
-      },
-    }
+  export default {
+    name: "commentForm",
+    props: {
+      blogPostId: String,
+    },
+    computed: {
+
+    },
+    data() {
+      return {
+        commentText: "",
+      }
+    },
+    methods: {
+    },
+    apollo: {
+
+    },
+  }
 </script>
 
 <style scoped lang="scss">

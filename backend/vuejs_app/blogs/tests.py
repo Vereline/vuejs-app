@@ -49,22 +49,22 @@ class BaseBlogAPITestCase(TestCase):
     def setUpClient(self):
         client = APIClient()
         login_response = client.post('/accounts/token-auth/',
-                                         {
-                                             'username_or_email': self.test_username,
-                                             'password': self.test_password
-                                         }
-                                         )
+                                     {
+                                         'username_or_email': self.test_username,
+                                         'password': self.test_password
+                                     }
+                                     )
         client.credentials(HTTP_AUTHORIZATION='Bearer ' + login_response.data['token'])
         return client
 
     def setUpAdminClient(self):
         admin_client = APIClient()
         admin_login_response = admin_client.post('/accounts/token-auth/',
-                                               {
-                                                   'username_or_email': self.admin_test_email,
-                                                   'password': self.admin_test_password
-                                               }
-                                               )
+                                                 {
+                                                     'username_or_email': self.admin_test_email,
+                                                     'password': self.admin_test_password
+                                                 }
+                                                 )
         admin_client.credentials(HTTP_AUTHORIZATION='Bearer ' + admin_login_response.data['token'])
         return admin_client
 
@@ -126,33 +126,17 @@ class TestComment(BaseBlogAPITestCase):
 
     def test_create_comment_succeed(self):
         client = self.setUpClient()
-        response = client.post('/blogs/blog-posts/1/comments/', json.dumps(self.comment_test_data), content_type='application/json')
+        response = client.post('/blogs/blog-posts/1/comments/', json.dumps(self.comment_test_data),
+                               content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_update_comment_succeed(self):
         client = self.setUpClient()
-        response = client.put('/blogs/blog-posts/1/comments/1/', json.dumps(self.comment_test_data), content_type='application/json')
+        response = client.put('/blogs/blog-posts/1/comments/1/', json.dumps(self.comment_test_data),
+                              content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_delete_comment_succeed(self):
         client = self.setUpClient()
         response = client.delete('/blogs/blog-posts/1/comments/1/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-
-
-class TestGraphqlSchemaBlogPost(TestCase):
-    @classmethod
-    def setUp(cls):
-        pass
-
-    def test_schema(self):
-        pass
-
-
-class TestGraphqlSchemaComment(TestCase):
-    @classmethod
-    def setUp(cls):
-        pass
-
-    def test_schema(self):
-        pass

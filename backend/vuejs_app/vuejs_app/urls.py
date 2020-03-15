@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
 from django.views.decorators.csrf import csrf_exempt
 
-from graphene_django.views import GraphQLView
+from default.views import PrivateGraphQLView
 from .settings import MEDIA_URL, MEDIA_ROOT, DEBUG
 
 favicon_view = RedirectView.as_view(url='/static/images/favicon.ico', permanent=True)
@@ -30,7 +30,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('blogs/', include('blogs.urls')),
-    path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path('graphql', csrf_exempt(PrivateGraphQLView.as_view(graphiql=True))),
     # this endpoint disables graphql ui on the backend and adds csrf token protection
     # path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=False))),
     re_path(r'^favicon\.ico$', favicon_view),

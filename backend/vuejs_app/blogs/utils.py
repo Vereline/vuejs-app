@@ -1,3 +1,4 @@
+from django_graphene_permissions.permissions import BasePermission
 from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
 
@@ -37,3 +38,25 @@ class BlogPostSetPagination(PageNumberPagination):
     page_size = 5
     page_size_query_param = 'page_size'
     max_page_size = 7
+
+
+class IsAdminOrReadOnlyGraphQL(BasePermission):
+
+    @staticmethod
+    def has_permission(context):
+        return context.user and context.user.is_authenticated
+
+    @staticmethod
+    def has_object_permission(context, obj):
+        return True
+
+
+class IsAuthenticatedGraphQL(BasePermission):
+
+    @staticmethod
+    def has_permission(context):
+        return context.user and context.user.is_authenticated
+
+    @staticmethod
+    def has_object_permission(context, obj):
+        return True

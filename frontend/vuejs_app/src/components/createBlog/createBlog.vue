@@ -33,8 +33,16 @@
 </template>
 
 <script>
+  import { BLOG_CREATE, BLOG_UPDATE } from "./index"
+
   export default {
     name: "createBlog",
+    props: {
+      author: String,
+    },
+    computed: {
+
+    },
     data() {
      return {
        formData: {
@@ -43,6 +51,9 @@
        },
      }
     },
+   apollo: {
+
+   },
   }
 </script>
 

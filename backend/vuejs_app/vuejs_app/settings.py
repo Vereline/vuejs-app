@@ -346,6 +346,9 @@ if DEBUG:
     EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
     EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 
+    # GRAPHENE['MIDDLEWARE'] = [
+    #     'graphene_django.debug.DjangoDebugMiddleware',
+    # ]
 
 # Logging settings for django projects, works with django 1.5+
 # If DEBUG=True, all logs (including django logs) will be
