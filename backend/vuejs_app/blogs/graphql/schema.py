@@ -1,7 +1,7 @@
 import graphene
 from graphene_django.types import DjangoObjectType
 from ..models import BlogPost, Comment
-from blogs.utils import IsAdminOrReadOnlyGraphQL, IsAuthenticatedGraphQL
+from default.permissions import IsAdminOrReadOnlyGraphQL, IsAuthenticatedGraphQL
 
 
 class BlogPostType(DjangoObjectType):

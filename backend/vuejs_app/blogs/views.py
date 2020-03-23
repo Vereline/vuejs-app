@@ -6,7 +6,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from blogs.models import BlogPost, Comment
 from blogs.serializers import BlogPostSerializer, CommentSerializer, ModifyBlogPostSerializer, ModifyCommentSerializer
-from blogs.utils import BlogPostSetPagination, IsAdminOrReadOnly
+from default.permissions import BlogPostSetPagination, IsAdminOrReadOnly
 # Create your views here.
 
 

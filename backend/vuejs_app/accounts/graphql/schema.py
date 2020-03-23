@@ -1,6 +1,7 @@
 from graphene import Field, List, ID, Int, InputObjectType, String, Mutation, Boolean
 from graphene_django.types import DjangoObjectType, ObjectType
 from accounts.models import User
+from default.permissions import IsAuthenticatedGraphQL
 
 
 # Create a GraphQL type for the User model
@@ -30,6 +31,9 @@ class Query(ObjectType):
 class UserInput(InputObjectType):
     id = ID()
     username = String()
+    first_name = String()
+    last_name = String()
+    password = String()
 
 
 # Create mutations for users
@@ -43,7 +47,8 @@ class CreateUser(Mutation):
     @staticmethod
     def mutate(root, info, input=None):
         ok = True
-        user_instance = User(username=input.username)
+        user_instance = User(username=input.username, first_name=input.first_name, last_name=input.last_name,
+                             password=input.password, is_active=True)
         user_instance.save()
         return CreateUser(ok=ok, user=user_instance)
 
@@ -63,9 +68,15 @@ class UpdateUser(Mutation):
         if user_instance:
             ok = True
             user_instance.username = input.username
+            user_instance.first_name = input.first_name
+            user_instance.last_name = input.last_name
             user_instance.save()
             return UpdateUser(ok=ok, user=user_instance)
         return UpdateUser(ok=ok, user=None)
+
+    @staticmethod
+    def permission_classes():
+        return [IsAuthenticatedGraphQL]
 
 
 class UserMutation(ObjectType):
