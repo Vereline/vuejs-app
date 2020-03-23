@@ -1,5 +1,5 @@
-from graphene import ObjectType, Schema, Field  # , Revoke
-from graphql_jwt import ObtainJSONWebToken, Verify, Refresh
+from graphene import ObjectType, Schema, Field
+# from graphql_jwt import ObtainJSONWebToken, Verify, Refresh, Revoke
 from graphene_django.debug import DjangoDebug
 
 import accounts.graphql.schema as accounts_schema
@@ -25,10 +25,11 @@ class Mutation(
 ):
     # This class will inherit from multiple Queries
     # as we begin to add more apps to our project
-    token_auth = ObtainJSONWebToken.Field()
-    verify_token = Verify.Field()
-    refresh_token = Refresh.Field()
+    # token_auth = ObtainJSONWebToken.Field()
+    # verify_token = Verify.Field()
+    # refresh_token = Refresh.Field()
     # revoke_token = Revoke.Field()
+    pass
 
 
 schema = Schema(query=Query, mutation=Mutation)

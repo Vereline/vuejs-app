@@ -3,7 +3,7 @@ import json
 from django.urls import reverse
 from graphene.test import Client
 from graphene_django.utils.testing import GraphQLTestCase
-from graphql_jwt.testcases import JSONWebTokenTestCase
+# from graphql_jwt.testcases import JSONWebTokenTestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
@@ -170,56 +170,56 @@ class TestGraphqlSchemaUser(GraphQLTestCase):
         self.assertEqual(len(content['data']['users']), users_count)
 
 
-class TestGraphqlAuthentication(JSONWebTokenTestCase):
-    """
-
-    """
-    # URL to graphql endpoint
-    GRAPHQL_URL = reverse('graphql-view')
-    GRAPHQL_SCHEMA = schema
-
-    auth_mutation = '''
-        mutation TokenAuth($username: String!, $password: String!) {
-          tokenAuth(username: $username, password: $password) {
-            token
-            payload
-            refreshExpiresIn
-          }
-    }
-    '''
-
-    verify_token = '''
-        mutation VerifyToken($token: String!) {
-          verifyToken(token: $token) {
-            payload
-          }
-        }
-    '''
-
-    refresh_token = '''
-        mutation RefreshToken($token: String!) {
-          refreshToken(token: $token) {
-            token
-            payload
-            refreshExpiresIn
-          }
-        }
-    '''
-
-    def setUp(self):
-        self.user = User.objects.create(username='test')
-        self.client.authenticate(self.user)
-
-    def test_get_user(self):
-        query = '''
-        query GetUser($username: String!) {
-          user(username: $username) {
-            id
-          }
-        }'''
-
-        variables = {
-          'username': self.user.username,
-        }
-
-        self.client.execute(query, variables)
+# class TestGraphqlAuthentication(JSONWebTokenTestCase):
+#     """
+#
+#     """
+#     # URL to graphql endpoint
+#     GRAPHQL_URL = reverse('graphql-view')
+#     GRAPHQL_SCHEMA = schema
+#
+#     auth_mutation = '''
+#         mutation TokenAuth($username: String!, $password: String!) {
+#           tokenAuth(username: $username, password: $password) {
+#             token
+#             payload
+#             refreshExpiresIn
+#           }
+#     }
+#     '''
+#
+#     verify_token = '''
+#         mutation VerifyToken($token: String!) {
+#           verifyToken(token: $token) {
+#             payload
+#           }
+#         }
+#     '''
+#
+#     refresh_token = '''
+#         mutation RefreshToken($token: String!) {
+#           refreshToken(token: $token) {
+#             token
+#             payload
+#             refreshExpiresIn
+#           }
+#         }
+#     '''
+#
+#     def setUp(self):
+#         self.user = User.objects.create(username='test')
+#         self.client.authenticate(self.user)
+#
+#     def test_get_user(self):
+#         query = '''
+#         query GetUser($username: String!) {
+#           user(username: $username) {
+#             id
+#           }
+#         }'''
+#
+#         variables = {
+#           'username': self.user.username,
+#         }
+#
+#         self.client.execute(query, variables)

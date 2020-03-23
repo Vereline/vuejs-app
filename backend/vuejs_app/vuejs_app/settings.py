@@ -79,7 +79,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    # 'graphql_jwt.middleware.JSONWebTokenMiddleware',
 ]
 
 ROOT_URLCONF = 'vuejs_app.urls'
@@ -158,7 +158,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'graphql_jwt.backends.JSONWebTokenBackend',
+    # 'graphql_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -290,17 +290,17 @@ DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
 
 GRAPHENE = {
     'SCHEMA': 'vuejs_app.schema.schema',
-    'MIDDLEWARE': [
-        'graphql_jwt.middleware.JSONWebTokenMiddleware',
-    ],
+    # 'MIDDLEWARE': [
+    #     'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    # ],
 }
 
-GRAPHQL_JWT = {
-    'JWT_VERIFY_EXPIRATION': True,
-    # 'JWT_LONG_RUNNING_REFRESH_TOKEN': True,  # Long running refresh tokens
-    'JWT_EXPIRATION_DELTA': timedelta(minutes=5),
-    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
-}
+# GRAPHQL_JWT = {
+#     'JWT_VERIFY_EXPIRATION': True,
+#     # 'JWT_LONG_RUNNING_REFRESH_TOKEN': True,  # Long running refresh tokens
+#     'JWT_EXPIRATION_DELTA': timedelta(minutes=5),
+#     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
+# }
 
 
 # debug_toolbar settings

@@ -156,9 +156,9 @@
  /*  }*/
  /*}*/
 
- a {
-   text-decoration: none;
- }
+  a {
+    text-decoration: none;
+  }
 
   /*Simple css to style it like a toggle switch*/
   .theme-switch-wrapper {
@@ -218,6 +218,11 @@
     &:before {
       border-radius: 50%;
     }
+  }
+
+  //  on some devices this color on navbar is not applied, set up explicitly to ensure it works
+  [theme="dark"] .bg-light.navbar {
+    background-color: #303030 !important;
   }
 
 </style>
