@@ -1,24 +1,34 @@
-from graphene import ObjectType, Schema
-# from graphene_django.debug import DjangoDebug
+from graphene import ObjectType, Schema, Field  # , Revoke
+from graphql_jwt import ObtainJSONWebToken, Verify, Refresh
+from graphene_django.debug import DjangoDebug
 
 import accounts.graphql.schema as accounts_schema
 import blogs.graphql.schema as blog_schema
 
 
-class Query(accounts_schema.Query, blog_schema.BlogQuery, blog_schema.CommentQuery, ObjectType):
+class Query(
+    accounts_schema.Query,
+    blog_schema.BlogQuery,
+    blog_schema.CommentQuery,
+    ObjectType
+):
     # This class will inherit from multiple Queries
     # as we begin to add more apps to our project
 
     # field for debugging graphql queries
-    # debug = graphene.Field(DjangoDebug, name='_debug')
-
-    pass
+    debug = Field(DjangoDebug, name='_debug')
 
 
-class Mutation(accounts_schema.UserMutation, blog_schema.Mutations, ObjectType):
+class Mutation(
+    accounts_schema.UserMutation,
+    blog_schema.Mutations, ObjectType
+):
     # This class will inherit from multiple Queries
     # as we begin to add more apps to our project
-    pass
+    token_auth = ObtainJSONWebToken.Field()
+    verify_token = Verify.Field()
+    refresh_token = Refresh.Field()
+    # revoke_token = Revoke.Field()
 
 
 schema = Schema(query=Query, mutation=Mutation)

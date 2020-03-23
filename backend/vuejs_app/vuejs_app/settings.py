@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'corsheaders',  # A Django App that adds CORS (Cross-Origin Resource Sharing) headers to responses.
     'django_rest_passwordreset',
     'graphene_django',
+    # 'graphql_jwt.refresh_token.apps.RefreshTokenConfig',  # for long running refresh tokens
 
     'accounts',
     'blogs',
@@ -78,6 +79,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'graphql_jwt.middleware.JSONWebTokenMiddleware',
 ]
 
 ROOT_URLCONF = 'vuejs_app.urls'
@@ -156,6 +158,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -287,6 +290,16 @@ DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
 
 GRAPHENE = {
     'SCHEMA': 'vuejs_app.schema.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+}
+
+GRAPHQL_JWT = {
+    'JWT_VERIFY_EXPIRATION': True,
+    # 'JWT_LONG_RUNNING_REFRESH_TOKEN': True,  # Long running refresh tokens
+    'JWT_EXPIRATION_DELTA': timedelta(minutes=5),
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
 }
 
 
@@ -346,9 +359,9 @@ if DEBUG:
     EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
     EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 
-    # GRAPHENE['MIDDLEWARE'] = [
-    #     'graphene_django.debug.DjangoDebugMiddleware',
-    # ]
+    GRAPHENE['MIDDLEWARE'] = [
+        'graphene_django.debug.DjangoDebugMiddleware',
+    ]
 
 # Logging settings for django projects, works with django 1.5+
 # If DEBUG=True, all logs (including django logs) will be

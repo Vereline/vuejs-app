@@ -34,6 +34,7 @@ class UserInput(InputObjectType):
     first_name = String()
     last_name = String()
     password = String()
+    email = String()
 
 
 # Create mutations for users
@@ -48,7 +49,7 @@ class CreateUser(Mutation):
     def mutate(root, info, input=None):
         ok = True
         user_instance = User(username=input.username, first_name=input.first_name, last_name=input.last_name,
-                             password=input.password, is_active=True)
+                             password=input.password, is_active=True, email=input.email)
         user_instance.save()
         return CreateUser(ok=ok, user=user_instance)
 
@@ -70,6 +71,7 @@ class UpdateUser(Mutation):
             user_instance.username = input.username
             user_instance.first_name = input.first_name
             user_instance.last_name = input.last_name
+            user_instance.email = input.email
             user_instance.save()
             return UpdateUser(ok=ok, user=user_instance)
         return UpdateUser(ok=ok, user=None)

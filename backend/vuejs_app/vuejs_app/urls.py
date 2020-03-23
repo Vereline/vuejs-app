@@ -31,8 +31,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('blogs/', include('blogs.urls')),
-    path('graphql', csrf_exempt(PrivateGraphQLView.as_view(graphiql=True))),
-    path('file-graphql', FileUploadGraphQLView.as_view(graphiql=True)),
+    path('graphql', csrf_exempt(PrivateGraphQLView.as_view(graphiql=True)), name='graphql-view'),
+    path('file-graphql', FileUploadGraphQLView.as_view(graphiql=True), name='graphql-files-view'),
     # this endpoint disables graphql ui on the backend and adds csrf token protection
     # path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=False))),
     re_path(r'^favicon\.ico$', favicon_view),

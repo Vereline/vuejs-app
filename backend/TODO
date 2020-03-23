@@ -76,3 +76,70 @@ pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n
 Do both QraphQl and DRF queries
 https://github.com/axnsan12/drf-yasg/
 https://drf-yasg.readthedocs.io/en/stable/
+
+
+Queries
+tokenAuth to authenticate the user and obtain a JSON Web Token and Refresh Token:
+
+mutation TokenAuth($username: String!, $password: String!) {
+  tokenAuth(username: $username, password: $password) {
+    token
+    payload
+    refreshToken
+    refreshExpiresIn
+  }
+}
+refreshToken to refresh your token, using the refreshToken you already got during authorization:
+
+mutation RefreshToken($refreshToken: String!) {
+  refreshToken(refreshToken: $refreshToken) {
+    token
+    payload
+    refreshToken
+    refreshExpiresIn
+  }
+}
+revokeToken to revoke a valid refreshToken. The invalidation takes place immediately, and the refreshToken cannot be used again after the revocation:
+
+mutation RevokeToken($refreshToken: String!) {
+  revokeToken(refreshToken: $refreshToken) {
+    revoked
+  }
+}
+
+
+Per-cookie
+When a refresh token is requested and jwt_cookie decorator is set, the response will set the given cookie with the refresh token string.
+
+Unlimited refresh
+Configure the JWT_REFRESH_EXPIRED_HANDLER setting that checks if the refresh token is expired:
+
+GRAPHQL_JWT = {
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
+    'JWT_REFRESH_EXPIRED_HANDLER': lambda orig_iat, context: False,
+}
+One time only use refresh token
+Automatically revoke a refresh token after it has been used:
+
+from django.dispatch import receiver
+
+from graphql_jwt.refresh_token.signals import refresh_token_rotated
+
+
+@receiver(refresh_token_rotated)
+def revoke_refresh_token(sender, request, refresh_token, **kwargs):
+    refresh_token.revoke(request)
+Clear refresh tokens
+Command.handle(expired, *args, **options)[source]
+The actual logic of the command. Subclasses must implement this method.
+
+Delete revoked refresh tokens with cleartokens command.
+
+$ python manage.py cleartokens --help
+
+usage: cleartokens [--expired]
+
+optional arguments:
+  --expired             Clears expired tokens
+The --expired argument allows the user to remove those refresh tokens whose lifetime is greater than the amount specified by JWT_REFRESH_EXPIRATION_DELTA setting.
