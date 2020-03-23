@@ -1,16 +1,19 @@
 import graphene
+from django_graphene_permissions import permissions_checker
 from graphene_django.types import DjangoObjectType
 from ..models import BlogPost, Comment
 from default.permissions import IsAdminOrReadOnlyGraphQL, IsAuthenticatedGraphQL
+# from graphene_permissions.mixins import AuthNode
+# from graphene_permissions.permissions import AllowAuthenticated, AllowStaff
 
 
 class BlogPostType(DjangoObjectType):
     class Meta:
         model = BlogPost
 
-    @staticmethod
-    def permission_classes():
-        return [IsAdminOrReadOnlyGraphQL]
+    # @staticmethod
+    # def permission_classes():
+    #     return [IsAdminOrReadOnlyGraphQL]
 
 
 class CreateBlogPost(graphene.Mutation):
@@ -25,15 +28,16 @@ class CreateBlogPost(graphene.Mutation):
 
     def mutate(self, info, title, full_text, author):
         if not info.context.user.is_authenticated:
+            # TODO: develop this stuff and create custom permission validators / decorators
             return BlogPost.objects.none()
         blog_post = BlogPost(title=title, full_text=full_text, author_id=author)
         blog_post.save()
         ok = True
         return CreateBlogPost(blog_post=blog_post, ok=ok)
 
-    @staticmethod
-    def permission_classes():
-        return [IsAdminOrReadOnlyGraphQL]
+    # @staticmethod
+    # def permission_classes():
+    #     return [IsAdminOrReadOnlyGraphQL]
 
 
 class UpdateBlogPost(graphene.Mutation):
@@ -55,21 +59,23 @@ class UpdateBlogPost(graphene.Mutation):
         ok = True
         return UpdateBlogPost(blog_post=blog_post, ok=ok)
 
-    @staticmethod
-    def permission_classes():
-        return [IsAdminOrReadOnlyGraphQL]
+    # @staticmethod
+    # def permission_classes():
+    #     return [IsAdminOrReadOnlyGraphQL]
 
 
 class BlogQuery(graphene.ObjectType):
     blog_post = graphene.Field(BlogPostType, id=graphene.Int())
     blog_posts = graphene.List(BlogPostType)
 
+    # @permissions_checker([IsAdminOrReadOnlyGraphQL])
     def resolve_blog_posts(self, info):
         # context will reference to the Django request
         if not info.context.user.is_authenticated:
             return BlogPost.objects.none()
         return BlogPost.objects.all()
 
+    # @permissions_checker([IsAdminOrReadOnlyGraphQL])
     def resolve_blog_post(self, info, **kwargs):
         if not info.context.user.is_authenticated:
             return BlogPost.objects.none()
@@ -78,18 +84,18 @@ class BlogQuery(graphene.ObjectType):
             return BlogPost.objects.get(pk=id)
         return None
 
-    @staticmethod
-    def permission_classes():
-        return [IsAdminOrReadOnlyGraphQL]
+    # @staticmethod
+    # def permission_classes():
+    #     return [IsAdminOrReadOnlyGraphQL]
 
 
 class CommentType(DjangoObjectType):
     class Meta:
         model = Comment
 
-    @staticmethod
-    def permission_classes():
-        return [IsAuthenticatedGraphQL]
+    # @staticmethod
+    # def permission_classes():
+    #     return [IsAuthenticatedGraphQL]
 
 
 class CreateComment(graphene.Mutation):
@@ -109,9 +115,9 @@ class CreateComment(graphene.Mutation):
         ok = True
         return CreateComment(comment=comment, ok=ok)
 
-    @staticmethod
-    def permission_classes():
-        return [IsAuthenticatedGraphQL]
+    # @staticmethod
+    # def permission_classes():
+    #     return [IsAuthenticatedGraphQL]
 
 
 class UpdateComment(graphene.Mutation):
@@ -131,9 +137,9 @@ class UpdateComment(graphene.Mutation):
         ok = True
         return UpdateComment(comment=comment, ok=ok)
 
-    @staticmethod
-    def permission_classes():
-        return [IsAuthenticatedGraphQL]
+    # @staticmethod
+    # def permission_classes():
+    #     return [IsAuthenticatedGraphQL]
 
 
 class CommentQuery(graphene.ObjectType):
@@ -153,9 +159,9 @@ class CommentQuery(graphene.ObjectType):
             return Comment.objects.get(pk=id)
         return None
 
-    @staticmethod
-    def permission_classes():
-        return [IsAuthenticatedGraphQL]
+    # @staticmethod
+    # def permission_classes():
+    #     return [IsAuthenticatedGraphQL]
 
 
 class Mutations(graphene.ObjectType):
