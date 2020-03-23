@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import {COMMENT_ADD, COMMENT_UPDATE} from './index'
+  // import {COMMENT_ADD, COMMENT_UPDATE} from './index'
 
   export default {
     name: "commentForm",

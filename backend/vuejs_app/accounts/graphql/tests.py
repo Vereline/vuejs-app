@@ -12,7 +12,23 @@ class TestGraphqlSchemaUser(GraphQLTestCase):
     def setUp(cls):
         pass
 
-    def test_some_query(self):
+    def test_get_user(self):
+        response = self.query(
+            '''
+            query {
+                myModel {
+                    id
+                    name
+                }
+            }
+            ''',
+            op_name='myModel'
+        )
+        content = json.loads(response.content)
+        # This validates the status code and if you get errors
+        self.assertResponseNoErrors(response)
+
+    def test_get_users(self):
         response = self.query(
             '''
             query {
@@ -29,3 +45,9 @@ class TestGraphqlSchemaUser(GraphQLTestCase):
 
         # This validates the status code and if you get errors
         self.assertResponseNoErrors(response)
+
+    def test_create_user(self):
+        pass
+
+    def test_update_user(self):
+        pass

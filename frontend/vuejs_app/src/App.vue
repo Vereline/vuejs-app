@@ -1,17 +1,17 @@
 <template>
-  <div id="app">
-    <div id="main-page">
+  <div id="app" class="main-page">
+    <div id="main-page" class="content-wrap">
     <!-- Navbar -->
       <navbar :isLogin="isLoginUser"></navbar>
       <router-view></router-view>
       <!-- Copyright Section -->
       <div class="mb-3"></div>
-      <section class="copyright py-4 text-center text-white bg-primary">
-        <b-container>
-          <small>Now I dont have a Copyright &copy; Elven Scroll 2019</small>
-        </b-container>
-      </section>
     </div>
+    <section class="copyright py-4 text-center text-white bg-primary page-footer">
+      <b-container>
+        <small>Now I dont have a Copyright &copy; Elven Scroll 2019</small>
+      </b-container>
+    </section>
   </div>
 </template>
 
@@ -36,8 +36,19 @@ export default {
 
 <style lang="scss">
 
-  #app {
-
+  .main-page {
+    position: relative;
+    min-height: 100vh;
   }
 
+  .content-wrap {
+    padding-bottom: 4.5rem;    /* Footer height */
+  }
+
+  .page-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 4.5rem;            /* Footer height */
+  }
 </style>
