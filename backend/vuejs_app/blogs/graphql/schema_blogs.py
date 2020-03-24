@@ -4,7 +4,7 @@ from django_graphene_permissions import PermissionDjangoObjectType
 # from graphene_django.types import DjangoObjectType
 # from graphene_permissions.mixins import AuthNode
 # from graphene_permissions.permissions import AllowAuthenticated, AllowStaff
-
+from default.graphql.schema import UploadMutation
 from default.permissions import IsAdminOrReadOnlyGraphQL, IsAuthenticatedGraphQL
 
 from ..models import BlogPost
@@ -81,6 +81,16 @@ class BlogQuery(graphene.ObjectType):
         return None
 
 
+class UploadBlogImage(UploadMutation):
+
+    def mutate(self, info, id, file, **kwargs):
+        blog_post = BlogPost.objects.get(pk=id)
+        blog_post.image = file
+        blog_post.save()
+        return UploadMutation(success=True)
+
+
 class Mutations(graphene.ObjectType):
     create_blog_post = CreateBlogPost.Field()
     update_blog_post = UpdateBlogPost.Field()
+    upload_blog_image = UploadBlogImage.Field()

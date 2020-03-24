@@ -14,7 +14,25 @@
         </div>
       </div>
 
-      <image-loader></image-loader>
+      <b-container grid-list-xl>
+        <image-loader v-model="blogImage">
+          <div slot="activator">
+            <b-img size="150px"
+                   v-if="!blogImage"
+                   class="grey lighten-3 mb-3">
+              <span>Click to add blog image</span>
+            </b-img>
+            <b-img size="150px"
+                   v-else
+                   class="mb-3">
+              <img :src="blogImage.imageURL" alt="blogImage">
+            </b-img>
+          </div>
+        </image-loader>
+        <div v-if="blogImage && savedImage === false">
+          <b-btn class="primary" @click="uploadImage" :loading="savingImage">Save blogImage</b-btn>
+        </div>
+      </b-container>
 
       <div class="field">
         <label class="label" for="description">Description</label>
@@ -54,10 +72,21 @@
            title: "",
            description: "",
        },
+       blogImage: null,
+       savingImage: false,
+       savedImage: false
      }
     },
     apollo: {
 
+    },
+    watch:{
+      blogImage: {
+        handler: function() {
+          this.savedImage = false
+        },
+        deep: true
+      }
     },
     methods: {
       submitButton(){
@@ -97,6 +126,15 @@
             // redirect to detail blog page
             this.$router.replace("blog/" + blogId);
           })
+      },
+      uploadImage() {
+        this.savingImage = true;
+        // here apollo mutation
+        setTimeout(() => this.savedBlogImage(), 1000)
+      },
+      savedBlogImage() {
+        this.savingImage = false;
+        this.savedImage = true
       },
     },
    }

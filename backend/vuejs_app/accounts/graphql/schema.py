@@ -1,6 +1,7 @@
 from graphene import Field, List, ID, Int, InputObjectType, String, Mutation, Boolean
 from graphene_django.types import DjangoObjectType, ObjectType
 from accounts.models import User
+from default.graphql.schema import UploadMutation
 from default.permissions import IsAuthenticatedGraphQL
 
 
@@ -81,6 +82,16 @@ class UpdateUser(Mutation):
         return [IsAuthenticatedGraphQL]
 
 
+class UploadProfilePhoto(UploadMutation):
+
+    def mutate(self, info, id, file, **kwargs):
+        user = User.objects.get(pk=id)
+        user.photo = file
+        user.save()
+        return UploadMutation(success=True)
+
+
 class UserMutation(ObjectType):
     create_user = CreateUser.Field()
     update_user = UpdateUser.Field()
+    upload_profile_photo = UploadProfilePhoto.Field()
