@@ -1,5 +1,7 @@
 <template>
-  <b-container>
+  <b-container
+    v-on:add-comment="addComment"
+    v-on:update-comment="updateComment">
     <b-row>
       <div class="col-lg-8">
         <h1>{{ blogPost.title }}</h1>
@@ -13,7 +15,7 @@
         <p class="text-right">Updated on {{convertDateFormat(blogPost.updatedAt)}}</p>
         <hr/>
         <div>
-          <div>
+          <div v-if="blogPost.image">
             <img class="img-fluid rounded" :src="convertImgSrc(blogPost.image)" alt="Title Image" />
           </div>
         </div>
@@ -76,7 +78,7 @@
                 lastName: "",
                 photo: "",
               },
-            }
+            },
           ],
         },
       }
@@ -95,8 +97,12 @@
       formatAuthorName(firstName, lastName) {
         return firstName + ' ' + lastName
       },
-      addComment() {
-        // push()
+      addComment(commentData) {
+        debugger;
+        this.data.comments = [...this.data.comments, commentData];
+      },
+      updateComment(commentData) {
+        this.data.comments = [...this.data.comments, commentData];
       },
     },
     apollo: {

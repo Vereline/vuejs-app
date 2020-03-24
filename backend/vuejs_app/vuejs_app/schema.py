@@ -3,13 +3,14 @@ from graphene import ObjectType, Schema, Field
 from graphene_django.debug import DjangoDebug
 
 import accounts.graphql.schema as accounts_schema
-import blogs.graphql.schema as blog_schema
+import blogs.graphql.schema_comments as comments_schema
+import blogs.graphql.schema_blogs as blog_schema
 
 
 class Query(
     accounts_schema.Query,
     blog_schema.BlogQuery,
-    blog_schema.CommentQuery,
+    comments_schema.CommentQuery,
     ObjectType
 ):
     # This class will inherit from multiple Queries
@@ -21,6 +22,7 @@ class Query(
 
 class Mutation(
     accounts_schema.UserMutation,
+    comments_schema.Mutations,
     blog_schema.Mutations, ObjectType
 ):
     # This class will inherit from multiple Queries

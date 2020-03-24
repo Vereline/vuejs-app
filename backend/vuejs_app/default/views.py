@@ -1,5 +1,4 @@
 # from django.contrib.auth.mixins import LoginRequiredMixin
-from django.conf import settings
 from graphene_django.views import GraphQLView
 # from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import permission_classes, authentication_classes, api_view

@@ -143,3 +143,26 @@ usage: cleartokens [--expired]
 optional arguments:
   --expired             Clears expired tokens
 The --expired argument allows the user to remove those refresh tokens whose lifetime is greater than the amount specified by JWT_REFRESH_EXPIRATION_DELTA setting.
+
+
+
+mutation addComment($text: String!, $blogPostId: Int!, $authorId: Int!) {
+  addComment(input: {
+    text: $text,
+    blogPost: {
+        id: $blogPostId
+      }
+    author: {
+        id: $authorId
+      }
+  }) {
+    ok
+}
+
+{
+    "firstName": "Asd1",
+    "lastName": "Asd1",
+    "username": "AsdAsd1",
+    "email": "As1d@asd.asd"
+}
+

@@ -12,3 +12,5 @@ export const PERSON_PROFILE = gql`query userDetailQuery($id: Int!) {
     email
   }
 }`;
+
+export const UPDATE_PERSON_PROFILE = ``;

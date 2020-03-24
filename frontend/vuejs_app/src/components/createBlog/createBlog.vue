@@ -14,6 +14,8 @@
         </div>
       </div>
 
+      <image-loader></image-loader>
+
       <div class="field">
         <label class="label" for="description">Description</label>
         <div class="control">
@@ -34,11 +36,14 @@
 
 <script>
   import { BLOG_CREATE, BLOG_UPDATE } from "./index"
+  import ImageLoader from "../imageLoader/imageLoader";
 
   export default {
     name: "createBlog",
+    components: {ImageLoader},
     props: {
       author: String,
+      blogId: String,
     },
     computed: {
 
@@ -51,10 +56,50 @@
        },
      }
     },
-   apollo: {
+    apollo: {
 
-   },
-  }
+    },
+    methods: {
+      submitButton(){
+        if (this.commentId)
+          this.updateBlog();
+        else
+          this.addBlog();
+      },
+      addBlog() {
+        this.$apollo
+          .mutate({
+            mutation: BLOG_CREATE,
+            variables: {
+              title: this.formData.title,
+              fullText: this.formData.description,
+              authorId: this.author
+            }
+          })
+          .then(response => {
+            let blogId = response.data["id"];
+            // redirect to detail blog page
+            this.$router.replace("blog/" + blogId);
+          })
+      },
+      updateBlog() {
+        this.$apollo
+          .mutate({
+            mutation: BLOG_UPDATE,
+            variables: {
+              title: this.formData.title,
+              fullText: this.formData.description,
+              id: this.blogId
+            }
+          })
+          .then(response => {
+            let blogId = response.data["id"];
+            // redirect to detail blog page
+            this.$router.replace("blog/" + blogId);
+          })
+      },
+    },
+   }
 </script>
 
 <style scoped lang="scss">

@@ -1,31 +1,38 @@
 import gql from "graphql-tag"
 
-// export const BLOG_CREATE = gql`mutation createBlog($title:String, $fullText: String) {
-//       createBlog(title: $title, fullText: $fullText) {
-//         blogPost {
-//             title
-//             fullText
-//         }
-//         ok
-//     }
-// }`;
-//
-// export const BLOG_UPDATE = gql`mutation updateBlog($id: String, author: Int) {
-//   updateBlog(id: $id, author: $author) {
-//     blogPost {
-//       id
-//       author
-//       title
-//       fullText
-//     }
-//     ok
-//   }`;
+export const BLOG_CREATE = gql`mutation createBlog($title:String!, $fullText: String!, $authorId: Int!) {
+      createBlogPost(title: $title, fullText: $fullText, authorId: $authorId) {
+        blogPost {
+          title
+          fullText
+          author {
+            id
+          }
+        }
+        ok
+    }
+}`;
+
+// export const inputData = {
+//   "title": "something to do",
+//   "fullText": "fullText for task",
+//   "authorId": 1
+// }
+
+export const BLOG_UPDATE = gql`mutation updateBlog($title:String!, $fullText: String!, $id: String!) {
+      updateBlogPost(title: $title, fullText: $fullText, id: $id) {
+        blogPost {
+          id
+          title
+          fullText
+        }
+        ok
+    }
+}`;
 
 
 // {
-//   "title": "something to do",
-//   "fullText": "fullText for task"
+//   "id": 2,
+//   "title": "something to do1",
+//   "fullText": "fullText for task1"
 // }
-
-
-// {"id": "2", "author": true}

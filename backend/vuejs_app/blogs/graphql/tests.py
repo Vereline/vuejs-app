@@ -11,6 +11,29 @@ class TestGraphqlSchemaBlogPost(GraphQLTestCase):
     @classmethod
     def setUp(cls):
         pass
+    # mutation createBlog($title:String!, $fullText: String!, $authorId: Int!) {
+    #       createBlogPost(title: $title, fullText: $fullText, authorId: $authorId) {
+    #         blogPost {
+    #             title
+    #             fullText
+    #           	author {
+    #           	  id
+    #           	}
+    #         }
+    #         ok
+    #     }
+    # }
+
+    # mutation updateBlog($title:String!, $fullText: String!, $id: String!) {
+    #       updateBlogPost(title: $title, fullText: $fullText, id: $id) {
+    #         blogPost {
+    #           id
+    #           title
+    #           fullText
+    #         }
+    #         ok
+    #     }
+    # }
 
     def test_some_query(self):
         response = self.query(
@@ -83,6 +106,41 @@ class TestGraphqlSchemaComment(GraphQLTestCase):
 
     @classmethod
     def setUp(cls):
+        # mutation updateComment($text: String!, $id: String!) {
+        #   updateComment(text: $text, id: $id) {
+        #     ok
+        #     comment{
+        #       id
+        #       text
+        #       author {
+        #         id
+        #         firstName,
+        #         lastName
+        #       }
+        #       blogPost {
+        #         id
+        #       }
+        #     }
+        #   }
+        # }
+
+        # mutation addComment($text: String!, $blogPostId: String!, $authorId: String!) {
+        #   createComment(text: $text, blogPost: $blogPostId, author: $authorId) {
+        #     ok
+        #     comment{
+        #       id
+        #       text
+        #       author {
+        #         id
+        #         firstName,
+        #         lastName
+        #       }
+        #       blogPost {
+        #         id
+        #       }
+        #     }
+        #   }
+        # }
         pass
 
     def test_schema(self):
