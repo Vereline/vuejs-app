@@ -114,3 +114,6 @@ password: "12345"
 https://cli.vuejs.org/guide/deployment.html#docker-nginx
 
 mobile version is useless, because vue has it's own mobile kits
+
+Multiple apollo clients
+https://vue-apollo.netlify.com/guide/multiple-clients.html

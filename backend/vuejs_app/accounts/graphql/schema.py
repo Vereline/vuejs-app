@@ -1,3 +1,4 @@
+import imghdr
 from graphene import Field, List, ID, Int, InputObjectType, String, Mutation, Boolean
 from graphene_django.types import DjangoObjectType, ObjectType
 from accounts.models import User
@@ -86,9 +87,12 @@ class UploadProfilePhoto(UploadMutation):
 
     def mutate(self, info, id, file, **kwargs):
         user = User.objects.get(pk=id)
+        available_formats = ['png', 'jpg', 'jpeg', 'bmp', 'gif']
+        if imghdr.what(file) not in available_formats:
+            return UploadProfilePhoto(success=False)
         user.photo = file
-        user.save()
-        return UploadMutation(success=True)
+        user.save(update_photo=True)
+        return UploadProfilePhoto(success=True)
 
 
 class UserMutation(ObjectType):

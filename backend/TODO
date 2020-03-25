@@ -166,3 +166,13 @@ mutation addComment($text: String!, $blogPostId: Int!, $authorId: Int!) {
     "email": "As1d@asd.asd"
 }
 
+Test gql image upload
+
+curl localhost:8000/file-graphql
+-F operations='{ "query": "mutfilePhoto(file: $file, id: $id) { success } }", "variables": { "file": null, "id": "2" } }'
+-F map='{ "0": ["variables.file"] }'
+-F 0=@1.txt
+
+
+
+{"data":{"uploadProfilePhoto":{"success":true}}}

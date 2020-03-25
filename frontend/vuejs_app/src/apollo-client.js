@@ -3,6 +3,7 @@ import { ApolloClient } from 'apollo-client'
 import { setContext } from 'apollo-link-context';
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import {createUploadLink} from "apollo-upload-client";
 import VueApollo from 'vue-apollo'
 
 import {API_URL} from "./constants";
@@ -12,6 +13,11 @@ import store from './store'
 const httpLink = new HttpLink({
   // You should use an absolute URL here
   uri: API_URL + '/graphql',
+});
+
+const httpFileLink = new createUploadLink({
+  // You should use an absolute URL here
+  uri: API_URL + '/file-graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -34,7 +40,18 @@ const apolloClient = new ApolloClient({
   connectToDevTools: true,
 });
 
+// Create the apollo client
+const apolloFileClient = new ApolloClient({
+  link: authLink.concat(httpFileLink),
+  cache: new InMemoryCache(),
+  connectToDevTools: true,
+});
+
 const apolloProvider = new VueApollo({
+  clients: {
+    apolloClient,
+    apolloFileClient,
+  },
   defaultClient: apolloClient,
 });
 

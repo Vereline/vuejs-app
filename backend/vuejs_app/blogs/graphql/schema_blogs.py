@@ -1,3 +1,5 @@
+import imghdr
+
 import graphene
 from django_graphene_permissions import permissions_checker
 from django_graphene_permissions import PermissionDjangoObjectType
@@ -84,10 +86,13 @@ class BlogQuery(graphene.ObjectType):
 class UploadBlogImage(UploadMutation):
 
     def mutate(self, info, id, file, **kwargs):
+        available_formats = ['png', 'jpg', 'jpeg', 'bmp', 'gif']
+        if imghdr.what(file) not in available_formats:
+            return UploadBlogImage(success=False)
         blog_post = BlogPost.objects.get(pk=id)
         blog_post.image = file
         blog_post.save()
-        return UploadMutation(success=True)
+        return UploadBlogImage(success=True)
 
 
 class Mutations(graphene.ObjectType):
