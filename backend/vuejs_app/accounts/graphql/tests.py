@@ -1,10 +1,10 @@
-import json
+# import json
 
 from django.urls import reverse
 from graphene.test import Client
 from graphene_django.utils.testing import GraphQLTestCase
 # from graphql_jwt.testcases import JSONWebTokenTestCase
-from rest_framework import status
+# from rest_framework import status
 from rest_framework.test import APIClient
 
 from accounts.models import User
@@ -29,29 +29,25 @@ class TestGraphqlSchemaUser(GraphQLTestCase):
                                             password=cls.test_password, is_active=True)
         cls.test_user.set_password(cls.test_password)
         cls.test_user.save()
-        cls.create_input = '''
-        {
-            "input": {
-                "firstName": "Asd",
-                "lastName": "Asd",
-                "username": "AsdAsd",
-                "password": "12345678",
-                "email": "Asd@asd.asd"
+        cls.create_input = {
+            'input': {
+                'firstName': 'Asd',
+                'lastName': 'Asd',
+                'username': 'AsdAsd',
+                'password': '12345678',
+                'email': 'Asd@asd.asd'
             }
         }
-        '''
-        cls.update_input = '''
-        {
-            "id": 1,
-            "input": {
-                  "firstName": "Asd",
-                  "lastName": "Asd",
-                  "username": "AsdAsd",
-                  "email": "Asd@asd.asd"
+
+        cls.update_input = {
+            'id': 1,
+            'input': {
+                  'firstName': 'Asd',
+                  'lastName': 'Asd',
+                  'username': 'AsdAsd',
+                  'email': 'Asd@asd.asd'
             }
         }
-        '''
-        # cls.client = Client(schema)
 
     def setUpClient(self):
         client = APIClient()
@@ -67,8 +63,7 @@ class TestGraphqlSchemaUser(GraphQLTestCase):
 
     def test_get_user(self):
         client = Client(self.GRAPHQL_SCHEMA)
-        response = self.query(
-            '''
+        response = client.execute('''
             query {
                 user(id: 1) {
                     id,
@@ -81,20 +76,37 @@ class TestGraphqlSchemaUser(GraphQLTestCase):
                     email,
                 }
             }
-            ''',
-            op_name='User',
-            headers={
-                'Authorization': 'Bearer ' + self.setUpClient()
-            }
-        )
+            ''')
+        # response = self.query(
+        #     '''
+        #     query {
+        #         user(id: 1) {
+        #             id,
+        #             username,
+        #             firstName,
+        #             lastName,
+        #             birthDate,
+        #             isActive,
+        #             isStaff,
+        #             email,
+        #         }
+        #     }
+        #     ''',
+        #     # op_name='User',
+        #     headers={
+        #         'Authorization': 'Bearer ' + self.setUpClient(),
+        #         'Content-type': 'application/json',
+        #     }
+        # )
         # self.assertEqual(response.status_code, status.HTTP_200_OK)
-        content = json.loads(response.content)
+        # content = json.loads(response.content)
         # This validates the status code and if you get errors
-        self.assertResponseNoErrors(response)
-        self.assertEqual(content['data']['user']['id'], 1)
+        # self.assertResponseNoErrors(response)
+        self.assertEqual(response['data']['user']['id'], '1')
 
     def test_get_users(self):
-        response = self.query(
+        client = Client(self.GRAPHQL_SCHEMA)
+        response = client.execute(
             '''
             query {
                 users {
@@ -108,17 +120,14 @@ class TestGraphqlSchemaUser(GraphQLTestCase):
                     email,
                 }
             }
-            ''',
-            op_name='User'
+            '''
         )
-        # self.assertEqual(response.status_code, status.HTTP_200_OK)
-        content = json.loads(response.content)
-        self.assertResponseNoErrors(response)
         users_count = User.objects.count()
-        self.assertEqual(len(content['data']['users']), users_count)
+        self.assertEqual(len(response['data']['users']), users_count)
 
     def test_create_user(self):
-        response = self.query(
+        client = Client(self.GRAPHQL_SCHEMA)
+        response = client.execute(
             '''
                 mutation CreateUser($input: UserInput!){
                   createUser(input: $input) {
@@ -134,17 +143,13 @@ class TestGraphqlSchemaUser(GraphQLTestCase):
                   }
                 }
             ''',
-            op_name='User',
-            input_data=self.create_input
+            variable_values=self.create_input
         )
-        # self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        content = json.loads(response.content)
-        self.assertResponseNoErrors(response)
-        users_count = User.objects.count()
-        self.assertEqual(len(content['data']['users']), users_count)
+        self.assertEqual(response['data']['createUser']['user']['username'], 'AsdAsd')
 
     def test_update_user(self):
-        response = self.query(
+        client = Client(self.GRAPHQL_SCHEMA)
+        response = client.execute(
             '''
                 mutation UpdateUser($input: UserInput!, $id: Int!){
                   updateUser(input: $input, id: $id) {
@@ -160,14 +165,9 @@ class TestGraphqlSchemaUser(GraphQLTestCase):
                   }
                 }
             ''',
-            op_name='User',
-            input_data=self.update_input
+            variable_values=self.update_input
         )
-        # self.assertEqual(response.status_code, status.HTTP_200_OK)
-        content = json.loads(response.content)
-        self.assertResponseNoErrors(response)
-        users_count = User.objects.count()
-        self.assertEqual(len(content['data']['users']), users_count)
+        self.assertEqual(response['data']['updateUser']['user']['username'], 'AsdAsd')
 
 
 # class TestGraphqlAuthentication(JSONWebTokenTestCase):
