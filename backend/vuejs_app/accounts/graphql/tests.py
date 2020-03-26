@@ -13,7 +13,7 @@ from vuejs_app.schema import schema
 
 class TestGraphqlSchemaUser(GraphQLTestCase):
     """
-
+    Tests for all users graphql queries and mutations
     """
     # URL to graphql endpoint
     GRAPHQL_URL = reverse('graphql-view')
