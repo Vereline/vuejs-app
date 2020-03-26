@@ -8,16 +8,19 @@ import VueApollo from 'vue-apollo'
 
 import {API_URL} from "./constants";
 
-import store from './store'
+import store from "./store"
 
 const httpLink = new HttpLink({
   // You should use an absolute URL here
-  uri: API_URL + '/graphql',
+  uri: API_URL + "/graphql",
 });
 
 const httpFileLink = new createUploadLink({
   // You should use an absolute URL here
-  uri: API_URL + '/file-graphql',
+  uri: API_URL + "/file-graphql",
+  headers: {
+    "content-type": "multipart/form-data",
+  },
 });
 
 const authLink = setContext((_, { headers }) => {

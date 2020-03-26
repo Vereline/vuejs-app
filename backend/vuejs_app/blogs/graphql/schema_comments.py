@@ -1,19 +1,17 @@
 import graphene
-# from django_graphene_permissions import permissions_checker
-from graphene_django.types import DjangoObjectType
-# from default.permissions import IsAdminOrReadOnlyGraphQL, IsAuthenticatedGraphQL
-# from graphene_permissions.mixins import AuthNode
-# from graphene_permissions.permissions import AllowAuthenticated, AllowStaff
+from django_graphene_permissions import permissions_checker
+from django_graphene_permissions import PermissionDjangoObjectType
+from default.permissions import IsAuthenticatedGraphQL
 from ..models import Comment
 
 
-class CommentType(DjangoObjectType):
+class CommentType(PermissionDjangoObjectType):
     class Meta:
         model = Comment
 
-    # @staticmethod
-    # def permission_classes():
-    #     return [IsAuthenticatedGraphQL]
+    @staticmethod
+    def permission_classes():
+        return [IsAuthenticatedGraphQL]
 
 
 class CreateComment(graphene.Mutation):
@@ -25,6 +23,7 @@ class CreateComment(graphene.Mutation):
         author = graphene.String()
         text = graphene.String()
 
+    @permissions_checker([IsAuthenticatedGraphQL])
     def mutate(self, info, blog_post, author, text):
         if not info.context.user.is_authenticated:
             return Comment.objects.none()
@@ -32,10 +31,6 @@ class CreateComment(graphene.Mutation):
         comment.save()
         ok = True
         return CreateComment(comment=comment, ok=ok)
-
-    # @staticmethod
-    # def permission_classes():
-    #     return [IsAuthenticatedGraphQL]
 
 
 class UpdateComment(graphene.Mutation):
@@ -46,6 +41,7 @@ class UpdateComment(graphene.Mutation):
         id = graphene.String()
         text = graphene.String()
 
+    @permissions_checker([IsAuthenticatedGraphQL])
     def mutate(self, info, id, text):
         if not info.context.user.is_authenticated:
             return Comment.objects.none()
@@ -55,20 +51,18 @@ class UpdateComment(graphene.Mutation):
         ok = True
         return UpdateComment(comment=comment, ok=ok)
 
-    # @staticmethod
-    # def permission_classes():
-    #     return [IsAuthenticatedGraphQL]
-
 
 class CommentQuery(graphene.ObjectType):
     comment = graphene.Field(CommentType, id=graphene.Int())
     comments = graphene.List(CommentType)
 
+    @permissions_checker([IsAuthenticatedGraphQL])
     def resolve_comments(self, info):
         if not info.context.user.is_authenticated:
             return Comment.objects.none()
         return Comment.objects.all()
 
+    @permissions_checker([IsAuthenticatedGraphQL])
     def resolve_comment(self, info, **kwargs):
         if not info.context.user.is_authenticated:
             return Comment.objects.none()
@@ -76,10 +70,6 @@ class CommentQuery(graphene.ObjectType):
         if id is not None:
             return Comment.objects.get(pk=id)
         return None
-
-    # @staticmethod
-    # def permission_classes():
-    #     return [IsAuthenticatedGraphQL]
 
 
 class Mutations(graphene.ObjectType):

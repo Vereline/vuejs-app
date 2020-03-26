@@ -3,7 +3,42 @@
     <b-jumbotron class="mt-3">
       <b-row>
         <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-          <img :src="convertImgSrc(user.photo)" alt="stack photo" class="img img-fluid rounded"/>
+          <b-container class="text-center">
+            <image-loader v-model="profileImage"
+                          v-on:toggle-loaded-new-image="toggleLoadedNewImage"
+                          loadEvent="toggle-loaded-new-image">
+              <div slot="activator">
+                <div   v-if="!profileImage"
+                       class="m-1 empty-image"
+                       v-bind:style="{backgroundImage: 'url(' + backgroundPhoto + ')'}"
+                >
+<!--                  <span>Click to add profile photo</span>-->
+                </div>
+                <p v-if="!profileImage" class="text-center">Click to add profile photo</p>
+                <div   v-else
+                       class="m-1 empty-image"
+                       v-bind:style="{backgroundImage: 'url(' + profileImage.imageURL + ')'}"
+                >
+                </div>
+<!--                <b-img height="150px" width="150px"-->
+<!--                       v-else-->
+<!--                       :src="profileImage.imageURL"-->
+<!--                       class="mb-3 profile-image-picker"-->
+<!--                       alt="profileImage">-->
+<!--                </b-img>-->
+              </div>
+            </image-loader>
+
+            <div v-if="profileImage && loadedNewImage && savedImage === false">
+              <b-button type="submit"
+                        class="btn btn-success mt-3"
+                        v-on:click="uploadProfileImage"
+                        :loading="savingImage">
+                Save profile photo
+              </b-button>
+            </div>
+          </b-container>
+<!--          <img :src="convertImgSrc(user.photo)" alt="stack photo" class="img img-fluid rounded"/>-->
         </div>
         <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
           <b-container>
@@ -19,32 +54,6 @@
         </div>
       </b-row>
     </b-jumbotron>
-
-    <b-container >
-      <image-loader v-model="profileImage" v-on:toggle-loaded-new-image="toggleLoadedNewImage">
-        <div slot="activator">
-          <p>Click to add profile photo</p>
-          <div   v-if="!profileImage"
-                 class="m-1 empty-image">
-            <span>Click to add profile photo</span>
-          </div>
-          <b-img height="150px" width="150px"
-                 v-else
-                 :src="profileImage.imageURL"
-                 class="mb-3 profile-image-picker"
-                 alt="profileImage">
-          </b-img>
-        </div>
-      </image-loader>
-      <div v-if="profileImage && loadedNewImage && savedImage === false">
-        <b-button type="submit"
-                  class="btn btn-success"
-                  v-on:click="uploadProfileImage"
-                  :loading="savingImage">
-          Save profile photo
-        </b-button>
-      </div>
-    </b-container>
   </b-container>
 </template>
 
@@ -77,6 +86,11 @@
         savedImage: false
       }
     },
+    computed: {
+      backgroundPhoto() {
+        return this.convertImgSrc(this.user.photo)
+      },
+    },
     watch:{
       profileImage: {
         handler: function() {
@@ -103,7 +117,6 @@
         return ""
       },
       uploadProfileImage() {
-        debugger;
         this.savingImage = true;
         // here apollo mutation
         this.$apollo
@@ -111,7 +124,7 @@
           client: 'apolloFileClient',
           mutation: UPLOAD_PROFILE_IMAGE,
             variables: {
-              file: this.profileImage.imageURL,
+              file: this.profileImage.imageFile,
               id: this.id,
             },
         }).then(response => {
@@ -119,7 +132,6 @@
             this.savedProfileImage()
           }
         );
-
       },
       savedProfileImage() {
         this.savingImage = false;
@@ -150,6 +162,10 @@
     justify-content: center;
     align-items: center;
     vertical-align: middle;
+
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:cover;
 
     &:hover {
       cursor: pointer;

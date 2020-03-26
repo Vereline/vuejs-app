@@ -21,7 +21,7 @@
 
 <script>
     export default {
-        name: "imageLoader",
+      name: "imageLoader",
       data: ()=> ({
       errorDialog: null,
       errorText: '',
@@ -30,6 +30,7 @@
     }),
     props: {
     // Use "value" to enable using v-model
+      loadEvent: String,
       value: Object,
     },
     methods: {
@@ -58,8 +59,8 @@
             let imageURL = URL.createObjectURL(imageFile);
             formData.append(fieldName, imageFile);
             // Emit the FormData and image URL to the parent component
-            this.$emit('input', { formData, imageURL });
-            this.$emit('toggle-loaded-new-image', true);
+            this.$emit('input', { formData, imageURL, imageFile });
+            this.$emit(this.loadEvent, true);
           }
         }
       }

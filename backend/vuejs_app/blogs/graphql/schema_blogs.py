@@ -7,7 +7,7 @@ from django_graphene_permissions import PermissionDjangoObjectType
 # from graphene_permissions.mixins import AuthNode
 # from graphene_permissions.permissions import AllowAuthenticated, AllowStaff
 from default.graphql.schema import UploadMutation
-from default.permissions import IsAdminOrReadOnlyGraphQL, IsAuthenticatedGraphQL
+from default.permissions import IsAdminOrReadOnlyGraphQL
 
 from ..models import BlogPost
 
