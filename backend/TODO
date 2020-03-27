@@ -177,3 +177,6 @@ curl localhost:8000/file-graphql -F operations='{ "query": "mutation($file: Uplo
 
 
 {"data":{"uploadProfilePhoto":{"success":true}}}
+
+# simple API client for testing???
+https://github.com/graphql-python/graphene-django/blob/master/graphene_django/tests/test_views.py

@@ -1,11 +1,8 @@
-# import json
-
 from django.urls import reverse
 from graphene.test import Client
 from graphene_django.utils.testing import GraphQLTestCase
 # from graphql_jwt.testcases import JSONWebTokenTestCase
 # from rest_framework import status
-from rest_framework.test import APIClient
 
 from accounts.models import User
 from vuejs_app.schema import schema
@@ -49,18 +46,6 @@ class TestGraphqlSchemaUser(GraphQLTestCase):
             }
         }
 
-    def setUpClient(self):
-        client = APIClient()
-        login_response = client.post('/accounts/token-auth/',
-                                     {
-                                         'username_or_email': self.test_username,
-                                         'password': self.test_password
-                                     }
-                                     )
-        # client.credentials(HTTP_AUTHORIZATION='Bearer ' + login_response.data['token'])
-        # return client
-        return login_response.data['token']
-
     def test_get_user(self):
         client = Client(self.GRAPHQL_SCHEMA)
         response = client.execute('''
@@ -77,31 +62,6 @@ class TestGraphqlSchemaUser(GraphQLTestCase):
                 }
             }
             ''')
-        # response = self.query(
-        #     '''
-        #     query {
-        #         user(id: 1) {
-        #             id,
-        #             username,
-        #             firstName,
-        #             lastName,
-        #             birthDate,
-        #             isActive,
-        #             isStaff,
-        #             email,
-        #         }
-        #     }
-        #     ''',
-        #     # op_name='User',
-        #     headers={
-        #         'Authorization': 'Bearer ' + self.setUpClient(),
-        #         'Content-type': 'application/json',
-        #     }
-        # )
-        # self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # content = json.loads(response.content)
-        # This validates the status code and if you get errors
-        # self.assertResponseNoErrors(response)
         self.assertEqual(response['data']['user']['id'], '1')
 
     def test_get_users(self):

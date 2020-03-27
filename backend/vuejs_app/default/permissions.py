@@ -43,20 +43,26 @@ class BlogPostSetPagination(PageNumberPagination):
 class IsAdminOrReadOnlyGraphQL(BasePermission):
 
     @staticmethod
-    def has_permission(context):
-        return context.user and context.user.is_authenticated
+    def has_permission(request):
+        if request.method in permissions.SAFE_METHODS:
+            return bool(request.user and request.user.is_authenticated)
+
+        return bool(request.user and request.user.is_authenticated and request.user.is_staff)
 
     @staticmethod
-    def has_object_permission(context, obj):
-        return True
+    def has_object_permission(request, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return bool(request.user and request.user.is_authenticated)
+
+        return bool(request.user and request.user.is_authenticated and request.user.is_staff)
 
 
 class IsAuthenticatedGraphQL(BasePermission):
 
     @staticmethod
-    def has_permission(context):
-        return context.user and context.user.is_authenticated
+    def has_permission(request):
+        return bool(request.user and request.user.is_authenticated)
 
     @staticmethod
-    def has_object_permission(context, obj):
-        return True
+    def has_object_permission(request, obj):
+        return bool(request.user and request.user.is_authenticated)

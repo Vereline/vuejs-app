@@ -1,13 +1,42 @@
-from django.urls import reverse
-from graphene.test import Client
-from graphene_django.utils.testing import GraphQLTestCase
+import json
 
-from accounts.models import User
+from django.urls import reverse
+from graphene_django.utils.testing import GraphQLTestCase
+from urllib.parse import urlencode
+
+from rest_framework import status
+from rest_framework.test import APIClient
+
 from blogs.models import BlogPost, Comment
+from blogs.tests import BaseBlogAPITestCase
 from vuejs_app.schema import schema
 
 
-class TestGraphqlSchemaBlogPost(GraphQLTestCase):
+class BaseBlogGraphQLTestCase(GraphQLTestCase, BaseBlogAPITestCase):
+    # URL to graphql endpoint
+    blog_test_data = {}
+    comment_test_data = {}
+    GRAPHQL_URL = reverse('graphql-view')
+    # test case's schema
+    GRAPHQL_SCHEMA = schema
+
+    def url_string(self, **url_params):
+        string = self.GRAPHQL_URL
+        if url_params:
+            string += "?" + urlencode(url_params)
+
+        return string
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.blog_test_data['fullText'] = 'Updated blog text'
+        cls.blog_test_data['authorId'] = cls.blog_test_data['author']
+        cls.comment_test_data['blogPostId'] = cls.comment_test_data['blog_post']
+        cls.comment_test_data['authorId'] = cls.comment_test_data['author']
+
+
+class TestGraphqlSchemaBlogPost(BaseBlogGraphQLTestCase):
     """
     Tests for all blog graphql queries and mutations
     """
@@ -16,208 +45,286 @@ class TestGraphqlSchemaBlogPost(GraphQLTestCase):
     # test case's schema
     GRAPHQL_SCHEMA = schema
 
-    @classmethod
-    def setUp(cls):
-        cls.admin_test_username = 'adminTestUser'
-        cls.admin_test_email = 'admintest@user.com'
-        cls.admin_test_password = 'admin12345678'
-        admin_user = User.objects.create(username=cls.admin_test_username, email=cls.admin_test_email,
-                                         password=cls.admin_test_password, is_active=True, is_staff=True)
-        admin_user.set_password(cls.admin_test_password)
-        admin_user.save()
-        cls.blog = BlogPost.objects.create(title='TestTitle', full_text='Full text', author=admin_user)
-        cls.blog_test_data = {
-            'full_text': 'Updated blog text',
-            'title': 'Title',
-            'author': admin_user.id
-        }
-
     def test_get_blog_posts(self):
-        client = Client(self.GRAPHQL_SCHEMA)
-        response = client.execute('''
-        query allBlogPosts {
-            blogPosts {
-                id,
-                title,
-                fullText,
-                author {
-                    id,
-                    firstName,
-                    lastName
-                },
-                createdAt,
-                updatedAt
-            }
-        }
-        ''')
+        client = self.setUpClient()
+        response = client.get(self.url_string(
+            query='''
+                query allBlogPosts {
+                    blogPosts {
+                        id,
+                        title,
+                        fullText,
+                        author {
+                            id,
+                            firstName,
+                            lastName
+                        },
+                        createdAt,
+                        updatedAt
+                    }
+                }
+                '''
+        ))
         blog_count = BlogPost.objects.count()
-        self.assertEqual(len(response['data']['blogPosts']), blog_count)
+        content = json.loads(response.content)
+        self.assertEqual(len(content['data']['blogPosts']), blog_count)
 
     def test_get_blog_post(self):
-        client = Client(self.GRAPHQL_SCHEMA)
-        response = client.execute('''
-        query blogPostQuery($id: Int!) {
-            blogPost(id: $id) {
-                id,
-                title,
-                fullText,
-                image,
-                author {
-                    id,
-                    firstName,
-                    lastName,
-                    photo
-                },
-                createdAt,
-                updatedAt,
-                comments {
-                    id,
-                    text,
-                    createdAt,
-                    updatedAt,
-                    author {
-                       id,
-                        firstName,
-                        lastName,
-                       photo
-                    },
-                }
-            }
-        }
-        ''')
-        self.assertEqual(response['data']['blogPost']['id'], self.blog.id)
-
-    def test_create_blog_posts(self):
-        client = Client(self.GRAPHQL_SCHEMA)
-        response = client.execute(
-            '''
-            mutation createBlog($title:String!, $fullText: String!, $authorId: Int!) {
-                createBlogPost(title: $title, fullText: $fullText, authorId: $authorId) {
-                    blogPost {
-                        title
-                        fullText
+        client = self.setUpClient()
+        response = client.get(self.url_string(
+            query='''
+                query blogPostQuery($id: Int!) {
+                    blogPost(id: $id) {
+                        id,
+                        title,
+                        fullText,
+                        image,
                         author {
-                          id
+                            id,
+                            firstName,
+                            lastName,
+                            photo
+                        },
+                        createdAt,
+                        updatedAt,
+                        comments {
+                            id,
+                            text,
+                            createdAt,
+                            updatedAt,
+                            author {
+                               id,
+                                firstName,
+                                lastName,
+                               photo
+                            },
                         }
                     }
-                    ok
                 }
-            }
-        ''',
-            variable_values=self.blog_test_data
-        )
-        self.assertEqual(response['data']['createBlogPost']['blogPost']['title'], self.blog_test_data['title'])
+            ''',
+            variables=json.dumps({'id': self.blog.id})
+        ))
+        content = json.loads(response.content)
+        self.assertEqual(content['data']['blogPost']['id'], str(self.blog.id))
+
+    def test_create_blog_post(self):
+        client = self.setUpAdminClient()
+        response = client.post(self.url_string(
+            query='''
+                mutation createBlog($title:String!, $fullText: String!, $authorId: Int!) {
+                    createBlogPost(title: $title, fullText: $fullText, authorId: $authorId) {
+                        blogPost {
+                            title
+                            fullText
+                            author {
+                              id
+                            }
+                        }
+                        ok
+                    }
+                }
+            ''',
+            variables=json.dumps(self.blog_test_data)
+        ))
+        content = json.loads(response.content)
+        self.assertEqual(content['data']['createBlogPost']['blogPost']['title'], self.blog_test_data['title'])
 
     def test_update_blog_posts(self):
-        client = Client(self.GRAPHQL_SCHEMA)
-        response = client.execute(
-            '''
-            mutation updateBlog($title:String!, $fullText: String!, $id: String!) {
-                  updateBlogPost(title: $title, fullText: $fullText, id: $id) {
-                    blogPost {
-                      id
-                      title
-                      fullText
+        self.blog_test_data['id'] = self.blog.id
+        client = self.setUpAdminClient()
+        response = client.post(self.url_string(
+            query='''
+                mutation updateBlog($title:String!, $fullText: String!, $id: String!) {
+                    updateBlogPost(title: $title, fullText: $fullText, id: $id) {
+                        blogPost {
+                            id
+                            title
+                            fullText
+                        }
+                        ok
                     }
-                    ok
                 }
-            }
+                ''',
+            variables=json.dumps(self.blog_test_data)
+        ))
+        content = json.loads(response.content)
+        self.assertEqual(content['data']['updateBlogPost']['blogPost']['title'], self.blog_test_data['title'])
+
+    def test_failed_to_get_blog_no_auth(self):
+        client = APIClient()
+        response = client.get(self.url_string(
+            query='''
+                query allBlogPosts {
+                    blogPosts {
+                        id,
+                        title,
+                        fullText,
+                        author {
+                            id,
+                            firstName,
+                            lastName
+                        },
+                        createdAt,
+                        updatedAt
+                    }
+                }
+                '''
+        ))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_fail_create_not_admin(self):
+        client = self.setUpClient()
+        response = client.post(self.url_string(
+            query='''
+                mutation createBlog($title:String!, $fullText: String!, $authorId: Int!) {
+                    createBlogPost(title: $title, fullText: $fullText, authorId: $authorId) {
+                        blogPost {
+                            title
+                            fullText
+                            author {
+                              id
+                            }
+                        }
+                        ok
+                    }
+                }
             ''',
-            variable_values=self.blog_test_data
-        )
-        self.assertEqual(response['data']['createBlogPost']['blogPost']['title'], self.blog_test_data['title'])
+            variables=json.dumps(self.blog_test_data)
+        ))
+        content = json.loads(response.content)
+        self.assertEqual(content['errors'][0]['message'], 'Permission Denied.')
+        # self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
-class TestGraphqlSchemaComment(GraphQLTestCase):
+class TestGraphqlSchemaComment(BaseBlogGraphQLTestCase):
     """
     Tests for all comments graphql queries and mutations
     """
-    # URL to graphql endpoint
-    GRAPHQL_URL = reverse('graphql-view')
-    # test case's schema
-    GRAPHQL_SCHEMA = schema
-
-    @classmethod
-    def setUp(cls):
-        cls.admin_test_username = 'adminTestUser'
-        cls.admin_test_email = 'admintest@user.com'
-        cls.admin_test_password = 'admin12345678'
-        admin_user = User.objects.create(username=cls.admin_test_username, email=cls.admin_test_email,
-                                         password=cls.admin_test_password, is_active=True, is_staff=True)
-        admin_user.set_password(cls.admin_test_password)
-        admin_user.save()
-        cls.blog = BlogPost.objects.create(title='TestTitle', full_text='Full text', author=admin_user)
-        cls.comment = Comment.objects.create(text='Comment text', blog_post=cls.blog, author=admin_user)
-        cls.comment_test_data = {
-            'text': 'Updated text',
-            'blog_post': cls.blog.id,
-            'author': admin_user.id
-        }
-
-    def test_get_comment(self):
-        client = Client(self.GRAPHQL_SCHEMA)
-        response = client.execute(
-            '''
-
-        ''')
-        self.assertEqual(response['data']['comment']['id'], self.comment.id)
 
     def test_get_comments(self):
-        client = Client(self.GRAPHQL_SCHEMA)
-        response = client.execute(
+        client = self.setUpClient()
+        response = client.get(self.url_string(
+            query='''
+                query getComments {
+                    comments {
+                        id,
+                        text,
+                        createdAt,
+                        updatedAt,
+                        author {
+                            id,
+                            firstName,
+                            lastName,
+                            photo
+                        },
+                    }
+                }
             '''
-        ''')
+        ))
         comments_count = Comment.objects.count()
-        self.assertEqual(len(response['data']['comments']), comments_count)
+        content = json.loads(response.content)
+        self.assertEqual(len(content['data']['comments']), comments_count)
+
+    def test_get_comment(self):
+        client = self.setUpClient()
+        response = client.get(
+            self.url_string(
+                query='''
+                    query getComment($id: Int!) {
+                        comment(id: $id) {
+                            id,
+                            text,
+                            createdAt,
+                            updatedAt,
+                            author {
+                                id,
+                                firstName,
+                                lastName,
+                                photo
+                            },
+                        }
+                    }
+                ''',
+                variables=json.dumps({'id': self.comment.id})
+            ))
+        content = json.loads(response.content)
+        self.assertEqual(content['data']['comment']['id'], str(self.comment.id))
 
     def test_update_comment(self):
-        client = Client(self.GRAPHQL_SCHEMA)
-        response = client.execute(
-            '''
-            mutation updateComment($text: String!, $id: String!) {
-                updateComment(text: $text, id: $id) {
-                    ok
-                    comment {
-                        id
-                        text
-                        author {
-                            id
-                            firstName,
-                            lastName
-                        }
-                        blogPost {
-                            id
+        self.comment_test_data['id'] = self.comment.id
+        client = self.setUpClient()
+        response = client.post(
+            self.url_string(
+                query='''
+                    mutation updateComment($text: String!, $id: String!) {
+                        updateComment(text: $text, id: $id) {
+                            ok
+                            comment {
+                                id
+                                text
+                                author {
+                                    id
+                                    firstName,
+                                    lastName
+                                }
+                                blogPost {
+                                    id
+                                }
+                            }
                         }
                     }
-                }
-            }
-        ''',
-            variable_values=self.comment_test_data
-        )
-        self.assertEqual(response['data']['updateComment']['comment']['text'], self.comment_test_data['text'])
+                ''',
+                variables=json.dumps(self.comment_test_data)
+            ))
+        content = json.loads(response.content)
+        self.assertEqual(content['data']['updateComment']['comment']['text'], self.comment_test_data['text'])
 
     def test_create_comment(self):
-        client = Client(self.GRAPHQL_SCHEMA)
-        response = client.execute(
-            '''
-            mutation addComment($text: String!, $blogPostId: String!, $authorId: String!) {
-                createComment(text: $text, blogPost: $blogPostId, author: $authorId) {
-                    ok
-                    comment {
-                        id
-                        text
-                        author {
-                            id
-                            firstName,
-                            lastName
-                        }
-                        blogPost {
-                            id
+        client = self.setUpClient()
+        response = client.post(
+            self.url_string(
+                query='''
+                    mutation addComment($text: String!, $blogPostId: String!, $authorId: String!) {
+                        createComment(text: $text, blogPost: $blogPostId, author: $authorId) {
+                            ok
+                            comment {
+                                id
+                                text
+                                author {
+                                    id
+                                    firstName,
+                                    lastName
+                                }
+                                blogPost {
+                                    id
+                                }
+                            }
                         }
                     }
+                ''',
+                variables=json.dumps(self.comment_test_data)
+            ))
+        content = json.loads(response.content)
+        self.assertEqual(content['data']['createComment']['comment']['text'], self.comment_test_data['text'])
+
+    def test_failed_to_get_comment_no_auth(self):
+        client = APIClient()
+        response = client.get(self.url_string(
+            query='''
+                query getComments {
+                    comments {
+                        id,
+                        text,
+                        createdAt,
+                        updatedAt,
+                        author {
+                            id,
+                            firstName,
+                            lastName,
+                            photo
+                        },
+                    }
                 }
-            }
-        ''',
-            variable_values=self.comment_test_data
-        )
-        self.assertEqual(response['data']['createComment']['comment']['text'], self.comment_test_data['text'])
+            '''
+        ))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
