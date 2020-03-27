@@ -9,6 +9,8 @@
           <b-input name="title"
                    class="input"
                    type="text"
+                   v-model="formData.title"
+                   required
                    placeholder="Title">
           </b-input>
         </div>
@@ -45,12 +47,14 @@
 
 
       <div class="field">
-        <label class="label" for="description">Description</label>
+        <label class="label">Description</label>
         <div class="control">
           <b-textarea name="description"
                     id="description"
                     class="textarea"
-                    placeholder="Description">
+                    v-model="formData.description"
+                    placeholder="Description"
+                    required>
           </b-textarea>
         </div>
       </div>
@@ -95,7 +99,7 @@
        blogImage: null,
        savingImage: false,
        savedImage: false,
-      loadedNewImage: false,
+       loadedNewImage: false,
      }
     },
     apollo: {
@@ -123,13 +127,14 @@
             variables: {
               title: this.formData.title,
               fullText: this.formData.description,
-              authorId: this.author
+              authorId: Number(this.$store.state.id),
             }
           })
           .then(response => {
-            let blogId = response.data["id"];
+            debugger;
+            let blogId = response.data["createBlogPost"]["blogPost"]["id"];
             // redirect to detail blog page
-            this.$router.replace("blog/" + blogId);
+            this.$router.push("blog/" + blogId);
           })
       },
       updateBlog() {
@@ -139,13 +144,14 @@
             variables: {
               title: this.formData.title,
               fullText: this.formData.description,
-              id: this.blogId
+              id: this.blogId,
+              authorId: Number(this.author),
             }
           })
           .then(response => {
-            let blogId = response.data["id"];
+            let blogId = response.data["updateBlogPost"]["blogPost"]["id"];
             // redirect to detail blog page
-            this.$router.replace("blog/" + blogId);
+            this.$router.push("blog/" + blogId);
           })
       },
       uploadBlogImage() {

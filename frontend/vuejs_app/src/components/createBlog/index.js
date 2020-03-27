@@ -4,6 +4,7 @@ export const BLOG_CREATE = gql`mutation createBlog($title:String!, $fullText: St
       createBlogPost(title: $title, fullText: $fullText, authorId: $authorId) {
         blogPost {
           title
+          id
           fullText
           author {
             id
@@ -25,6 +26,9 @@ export const BLOG_UPDATE = gql`mutation updateBlog($title:String!, $fullText: St
           id
           title
           fullText
+          author {
+            id
+          }
         }
         ok
     }
