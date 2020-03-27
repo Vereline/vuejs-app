@@ -1,7 +1,5 @@
 <template>
-  <b-container
-    v-on:add-comment="addComment"
-    v-on:update-comment="updateComment">
+  <b-container>
     <b-row>
       <div class="col-lg-8">
         <h1>{{ blogPost.title }}</h1>
@@ -30,7 +28,11 @@
         </div>
 
         <!-- Comment form -->
-        <comment-form class="mt-4" v-bind:blog-post-id="id"></comment-form>
+        <comment-form class="mt-4"
+                      v-bind:blog-post-id="id"
+                      v-on:add-comment="addComment"
+                      v-on:update-comment="updateComment">
+        </comment-form>
       </div>
     </b-row>
   </b-container>
@@ -98,11 +100,11 @@
         return firstName + ' ' + lastName
       },
       addComment(commentData) {
-        debugger;
-        this.data.comments = [...this.data.comments, commentData];
+        this.blogPost.comments = [...this.blogPost.comments, commentData];
       },
       updateComment(commentData) {
-        this.data.comments = [...this.data.comments, commentData];
+        const indexOfItemInComments = this.blogPost.comments.findIndex(comment => comment.id === commentData.id);
+        this.blogPost.comments[indexOfItemInComments] = commentData;
       },
     },
     apollo: {

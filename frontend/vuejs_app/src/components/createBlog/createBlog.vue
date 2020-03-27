@@ -55,7 +55,10 @@
         </div>
       </div>
 
-      <b-button class="btn-success float-right mt-1" title="Login">
+      <b-button class="btn-success float-right mt-1"
+                variant="success"
+                v-on:click="submitButton"
+      >
         Create blog
       </b-button>
     </b-form>

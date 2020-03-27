@@ -6,10 +6,13 @@ export const COMMENT_ADD = gql`mutation addComment($text: String!, $blogPostId: 
     comment{
       id
       text
+      createdAt
+      updatedAt
       author {
         id
         firstName,
-        lastName
+        lastName,
+        photo
       }
       blogPost {
         id
@@ -30,10 +33,13 @@ export const COMMENT_UPDATE = gql`mutation updateComment($text: String!, $id: St
     comment{
       id
       text
+      createdAt
+      updatedAt
       author {
         id
         firstName,
-        lastName
+        lastName,
+        photo
       }
       blogPost {
         id

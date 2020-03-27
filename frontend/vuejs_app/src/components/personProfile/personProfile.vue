@@ -14,7 +14,7 @@
                 >
 <!--                  <span>Click to add profile photo</span>-->
                 </div>
-                <p v-if="!profileImage" class="text-center">Click to add profile photo</p>
+                <p v-if="!profileImage" class="text-center">Click on image to add profile photo</p>
                 <div   v-else
                        class="m-1 empty-image"
                        v-bind:style="{backgroundImage: 'url(' + profileImage.imageURL + ')'}"
@@ -153,11 +153,11 @@
 
 <style scoped lang="scss">
   .empty-image {
-    display: flex;
+    display: inline-flex;
     border-radius: 5%;
     background-color: #ecf0f1;
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     text-align: center;
     justify-content: center;
     align-items: center;

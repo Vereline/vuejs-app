@@ -18,7 +18,7 @@
                               required>
                   </b-textarea>
                 </b-form-group>
-                <b-button type="submit"
+                <b-button variant="success"
                           class="btn btn-success align-content-end float-right"
                           v-on:click="submitButton">
                     Submit
@@ -64,23 +64,23 @@
             mutation: COMMENT_ADD,
             variables: {
               text: this.commentText,
-              blogPost: this.blogPostId,
+              blogPostId: this.blogPostId,
               authorId: this.userId
             }
           })
           .then(response => {
             // add comment to list of comments
-            debugger;
+            let responseData = response.data['createComment']['comment'];
             let commentData = {
-              id: response.data["id"],
-              text: response.data["text"],
-              createdAt: response.data["createdAt"],
-              updatedAt: response.data["updatedAt"],
+              id: responseData["id"],
+              text: responseData["text"],
+              createdAt: responseData["createdAt"],
+              updatedAt: responseData["updatedAt"],
               author: {
-                id: response.data["author"]["id"],
-                firstName: response.data["author"]["firstName"],
-                lastName: response.data["author"]["lastName"],
-                photo: response.data["author"]["photo"],
+                id: responseData["author"]["id"],
+                firstName: responseData["author"]["firstName"],
+                lastName: responseData["author"]["lastName"],
+                photo: responseData["author"]["photo"],
               },
             };
             this.$emit('add-comment', commentData)
@@ -97,16 +97,17 @@
           })
           .then(response => {
             // update comment in list of comments
+            let responseData = response.data['updateComment']['comment'];
             let commentData = {
-              id: response.data["id"],
-              text: response.data["text"],
-              createdAt: response.data["createdAt"],
-              updatedAt: response.data["updatedAt"],
+              id: responseData["id"],
+              text: responseData["text"],
+              createdAt: responseData["createdAt"],
+              updatedAt: responseData["updatedAt"],
               author: {
-                id: response.data["author"]["id"],
-                firstName: response.data["author"]["firstName"],
-                lastName: response.data["author"]["lastName"],
-                photo: response.data["author"]["photo"],
+                id: responseData["author"]["id"],
+                firstName: responseData["author"]["firstName"],
+                lastName: responseData["author"]["lastName"],
+                photo: responseData["author"]["photo"],
               },
             };
             this.$emit('update-comment', commentData)
