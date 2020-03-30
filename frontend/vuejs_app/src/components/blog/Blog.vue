@@ -1,6 +1,13 @@
 <template>
   <b-container class="mt-2">
-    <h1>Blog</h1>
+    <h1>{{ $t("blogMessages.blogs") }}</h1>
+    <div class="button-div" v-if="isAdmin" >
+      <b-button variant="success" class="float-right">
+        <router-link :to="{ name: 'CreateBlog' }">
+         {{ $t("blogMessages.createBlog") }}
+        </router-link>
+      </b-button>
+    </div>
     <!-- blog card -->
     <b-card class="text-left news-card"
             v-for="(newsItem, key) in blogPosts">
@@ -14,26 +21,22 @@
       </b-card-text>
       <b-button variant="success" class="float-right">
         <router-link :to="{ name: 'BlogDetail', params: { blogId: newsItem.id }}">
-          View full
+          {{ $t("blogMessages.viewFull") }}
         </router-link>
       </b-button>
       </b-card-body>
     </b-card>
 
-    <b-button v-if="isAdmin" variant="success" class="mt-3 float-right">
-      <router-link :to="{ name: 'CreateBlog' }">
-       Create Blog
-      </router-link>
-    </b-button>
-
   </b-container>
 </template>
 
 <script>
+   import $i18n from '../../locales';
    import { ALL_BLOG_POSTS } from "./index"
 
     export default {
       name: "Blog",
+      $i18n,
       data() {
         return {
           blogPosts: [
@@ -80,13 +83,17 @@
     }
   }
 
- a {
-   text-decoration: none;
-   color: #fff;
+  a {
+    text-decoration: none;
+    color: #fff;
+      &:hover, &:active {
+      text-decoration: none;
+      color: #fff;
+    }
+  }
 
-   &:hover, &:active {
-     text-decoration: none;
-     color: #fff;
-   }
- }
+  .button-div {
+    width: 100%;
+    height: 50px;
+  }
 </style>

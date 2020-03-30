@@ -12,7 +12,12 @@ const messages = {
       login: 'Log In',
       signup: 'Sign Up',
       lang: 'Lang',
-    }
+    },
+    blogMessages: {
+      createBlog: 'Create Blog',
+      blogs: 'Blog',
+      viewFull: 'View full',
+    },
   },
   ru: {
     navbarMessages: {
@@ -21,7 +26,12 @@ const messages = {
       login: 'Логин',
       signup: 'Регистрация',
       lang: 'Язык',
-    }
+    },
+    blogMessages: {
+      createBlog: 'Создфть блог',
+      blogs: 'Блоги',
+      viewFull: 'Посмотреть полностью',
+    },
   },
   // by: {
   //   navbarMessages: {
