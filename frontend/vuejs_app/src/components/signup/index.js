@@ -20,6 +20,12 @@ export function signup(signupData) {
       return {status: response.status, errorMessage: ''};
     })
     .catch(error => {
+      if (!error.response) {
+        return {
+          status: 400,
+          errorMessage: error.message,
+         };
+      }
       return {
         status: error.response.status,
         errorMessage: error.response.request.responseText,

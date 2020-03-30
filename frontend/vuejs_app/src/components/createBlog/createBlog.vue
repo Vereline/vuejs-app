@@ -131,7 +131,6 @@
             }
           })
           .then(response => {
-            debugger;
             let blogId = response.data["createBlogPost"]["blogPost"]["id"];
             // redirect to detail blog page
             this.$router.push("blog/" + blogId);
