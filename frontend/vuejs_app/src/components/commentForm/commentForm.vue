@@ -7,13 +7,13 @@
             class="mb-3 text-left"
             style="max-width: 640px;"
             align="center">
-            <div class="text-uppercase card-header"><h5>Leave a comment</h5></div>
+            <div class="text-uppercase card-header"><h5>{{ $t("commentForm.commentHeader") }}</h5></div>
             <b-card-body>
               <b-form>
                 <b-form-group>
                   <b-textarea class="form-control"
                               rows={3}
-                              placeholder="Enter something..."
+                              :placeholder="$t('commentForm.commentPlaceholder')"
                               v-model="commentText"
                               required>
                   </b-textarea>
@@ -21,7 +21,7 @@
                 <b-button variant="success"
                           class="btn btn-success align-content-end float-right"
                           v-on:click="submitButton">
-                    Submit
+                    {{ $t("commentForm.commentSubmit") }}
                 </b-button>
               </b-form>
             </b-card-body>

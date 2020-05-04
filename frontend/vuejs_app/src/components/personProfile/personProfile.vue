@@ -12,20 +12,13 @@
                        class="m-1 empty-image"
                        v-bind:style="{backgroundImage: 'url(' + backgroundPhoto + ')'}"
                 >
-<!--                  <span>Click to add profile photo</span>-->
                 </div>
-                <p v-if="!profileImage" class="text-center">Click on image to add profile photo</p>
+                <p v-if="!profileImage" class="text-center">{{ $t("personProfile.photoText") }}</p>
                 <div   v-else
                        class="m-1 empty-image"
                        v-bind:style="{backgroundImage: 'url(' + profileImage.imageURL + ')'}"
                 >
                 </div>
-<!--                <b-img height="150px" width="150px"-->
-<!--                       v-else-->
-<!--                       :src="profileImage.imageURL"-->
-<!--                       class="mb-3 profile-image-picker"-->
-<!--                       alt="profileImage">-->
-<!--                </b-img>-->
               </div>
             </image-loader>
 
@@ -34,11 +27,10 @@
                         class="btn btn-success mt-3"
                         v-on:click="uploadProfileImage"
                         :loading="savingImage">
-                Save profile photo
+                {{ $t("personProfile.savePhotoButton") }}
               </b-button>
             </div>
           </b-container>
-<!--          <img :src="convertImgSrc(user.photo)" alt="stack photo" class="img img-fluid rounded"/>-->
         </div>
         <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
           <b-container>
@@ -46,10 +38,10 @@
           </b-container>
           <hr>
             <ul class="container details">
-              <li><p><span style="width:50px;"></span>{{"Date of join: " + convertDateFormat(user.birthDate)}}</p></li>
+              <li><p><span style="width:50px;"></span>{{$t("personProfile.joinDate") + convertDateFormat(user.birthDate)}}</p></li>
               <li><p><span style="width:50px;"></span><a :href="`mailto:${user.email}`">{{user.email}}</a></p></li>
-              <li><p><span style="width:50px;"></span>{{"Birth date: " + convertDateFormat(user.birthDate)}}</p></li>
-              <li><p><span style="width:50px;"></span>{{"Activity: " +  (user.isActive ? "Active user" : "Not Active user") }}</p></li>
+              <li><p><span style="width:50px;"></span>{{$t("personProfile.birthDate") + convertDateFormat(user.birthDate)}}</p></li>
+              <li><p><span style="width:50px;"></span>{{$t("personProfile.activity") +  (user.isActive ? $t("personProfile.activeUser") : $t("personProfile.inactiveUser")) }}</p></li>
           </ul>
         </div>
       </b-row>

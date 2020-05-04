@@ -4,13 +4,13 @@
       <div class="col-lg-8">
         <h1>{{ blogPost.title }}</h1>
         <p class="lead">
-          By <router-link :to="{ name: 'PersonProfile', params: {id: blogPost.author.id }}">
+          {{ $t("blogDetail.byWord") }} <router-link :to="{ name: 'PersonProfile', params: {id: blogPost.author.id }}">
           {{ formatAuthorName(blogPost.author.firstName, blogPost.author.lastName) }}
         </router-link>
         </p>
         <hr/>
-        <p class="text-right">Posted on {{convertDateFormat(blogPost.createdAt)}}</p>
-        <p class="text-right">Updated on {{convertDateFormat(blogPost.updatedAt)}}</p>
+        <p class="text-right">{{ $t("blogDetail.postedOn") }} {{convertDateFormat(blogPost.createdAt)}}</p>
+        <p class="text-right">{{ $t("blogDetail.updatedOn") }} {{convertDateFormat(blogPost.updatedAt)}}</p>
         <hr/>
         <div>
           <div v-if="blogPost.image">
@@ -19,7 +19,7 @@
         </div>
         <p class="lead main-text mt-4">{{ blogPost.fullText }}</p>
         <hr/>
-        <h4 class="text-uppercase mb-3">Comments</h4>
+        <h4 class="text-uppercase mb-3">{{ $t("blogDetail.commentsHeader") }}</h4>
         <div v-for="(comment, key) in blogPost.comments">
           <comment v-bind:comment="comment"
                    v-bind:blog-post-id="id"

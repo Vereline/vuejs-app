@@ -6,8 +6,8 @@
       <div class="container h-100">
         <div class="row h-100 align-items-end">
           <div class="col-12 text-center text-white ">
-            <h2 class="display-4 text-uppercase">Vertically Centered Masthead Content</h2>
-            <p class="lead">A great starter layout for a landing page</p>
+            <h2 class="display-4 text-uppercase">{{ $t("mainPage.mastheadText") }}</h2>
+            <p class="lead">{{ $t("mainPage.mastheadSubText") }}</p>
           </div>
         </div>
       </div>
@@ -24,7 +24,7 @@
           </b-col>
           <b-col col lg="6"  class="order-lg-1">
             <div class="p-5">
-              <h2 class="display-4 text-uppercase">Explore new imaginary world...</h2>
+              <h2 class="display-4 text-uppercase">{{ $t("mainPage.firstCol") }}</h2>
               <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
             </div>
           </b-col>
@@ -42,7 +42,7 @@
           </b-col>
           <b-col col lg="6">
             <div class="p-5">
-              <h2 class="display-4 text-uppercase">Read and enjoy an exciting story!</h2>
+              <h2 class="display-4 text-uppercase">{{ $t("mainPage.secondCol") }}</h2>
               <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
             </div>
           </b-col>

@@ -1,17 +1,17 @@
 <template>
   <b-container class="mt-2">
-    <h1>Create blog</h1>
+    <h1>{{ $t("createBlog.titleLabel") }}</h1>
     <!-- form starts here -->
     <b-form>
       <div class="field">
-        <label class="label">Title</label>
+        <label class="label">{{ $t("createBlog.titleLabel") }}</label>
         <div class="control">
           <b-input name="title"
                    class="input"
                    type="text"
                    v-model="formData.title"
                    required
-                   placeholder="Title">
+                   :placeholder='$t("createBlog.titlePlaceholder")'>
           </b-input>
         </div>
       </div>
@@ -26,7 +26,7 @@
                    v-bind:style="{backgroundImage: 'url(' + backgroundPhoto + ')'}"
             >
             </div>
-            <p v-if="!blogImage" class="text-center">Click to add blog image</p>
+            <p v-if="!blogImage" class="text-center">{{ $t("createBlog.imageText") }}</p>
             <div   v-else
                    class="m-1 empty-image"
                    v-bind:style="{backgroundImage: 'url(' + blogImage.imageURL + ')'}"
@@ -40,20 +40,20 @@
                     class="btn btn-success mt-3"
                     v-on:click="uploadBlogImage"
                     :loading="savingImage">
-            Upload blog image
+            {{ $t("createBlog.uploadImageText") }}
           </b-button>
         </div>
       </b-container>
 
 
       <div class="field">
-        <label class="label">Description</label>
+        <label class="label">{{ $t("createBlog.descriptionLabel") }}</label>
         <div class="control">
           <b-textarea name="description"
                     id="description"
                     class="textarea"
                     v-model="formData.description"
-                    placeholder="Description"
+                    :placeholder='$t("createBlog.descriptionPlaceholder")'
                     required>
           </b-textarea>
         </div>
@@ -63,7 +63,7 @@
                 variant="success"
                 v-on:click="submitButton"
       >
-        Create blog
+        {{ $t("createBlog.createButton") }}
       </b-button>
     </b-form>
   </b-container>

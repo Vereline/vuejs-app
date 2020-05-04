@@ -7,13 +7,13 @@
     @close="handleClose"
   >
   <template v-slot:modal-title>
-    <div class="text-uppercase">Sign up</div>
+    <div class="text-uppercase">{{ $t("signupModal.signupHeader") }}</div>
   </template>
   <div class="modal-container">
     <div class="modal-body mb-2">
       <b-form>
         <b-form-group
-          label="Username"
+          :label="$t('signupModal.usernameLabel')"
           label-for="signup-username"
           :invalid-feedback="invalidItem"
           :valid-feedback="validItem"
@@ -21,7 +21,7 @@
         >
           <b-form-input
             id="signup-username"
-            placeholder="Enter your username"
+            :placeholder="$t('signupModal.usernamePlaceholder')"
             type="text"
             v-model="$v.username.$model"
             v-model.trim="username"
@@ -29,7 +29,7 @@
           </b-form-input>
         </b-form-group>
         <b-form-group
-          label="Email"
+          :label="$t('signupModal.emailLabel')"
           label-for="signup-email"
           :invalid-feedback="invalidItem"
           :valid-feedback="validItem"
@@ -37,7 +37,7 @@
         >
           <b-form-input
             id="signup-email"
-            placeholder="Enter your email"
+            :placeholder="$t('signupModal.emailPlaceholder')"
             type="email"
             v-model="$v.email.$model"
             v-model.trim="email"
@@ -45,7 +45,7 @@
           </b-form-input>
         </b-form-group>
         <b-form-group
-          label="First name"
+          :label="$t('signupModal.firstNameLabel')"
           label-for="signup-first-name"
           :invalid-feedback="invalidItem"
           :valid-feedback="validItem"
@@ -53,7 +53,7 @@
         >
           <b-form-input
             id="signup-first-name"
-            placeholder="Enter your first name"
+            :placeholder="$t('signupModal.firstNamePlaceholder')"
             type="text"
             v-model="$v.firstName.$model"
             v-model.trim="firstName"
@@ -61,7 +61,7 @@
           </b-form-input>
         </b-form-group>
         <b-form-group
-          label="Last name"
+          :label="$t('signupModal.lastNameLabel')"
           label-for="signup-last-name"
           :invalid-feedback="invalidItem"
           :valid-feedback="validItem"
@@ -69,7 +69,7 @@
         >
           <b-form-input
             id="signup-last-name"
-            placeholder="Enter your last name"
+            :placeholder="$t('signupModal.lastNamePlaceholder')"
             type="text"
             v-model="$v.lastName.$model"
             v-model.trim="lastName"
@@ -77,7 +77,7 @@
           </b-form-input>
         </b-form-group>
         <b-form-group
-          label="Password"
+          :label="$t('signupModal.passwordLabel')"
           label-for="signup-password"
           :invalid-feedback="invalidItem"
           :valid-feedback="validItem"
@@ -85,7 +85,7 @@
         >
           <b-form-input
             id="signup-password"
-            placeholder="Enter your password"
+            :placeholder="$t('signupModal.passwordPlaceholder')"
             type="password"
             v-model="$v.password.$model"
             v-model.trim="password"
@@ -93,7 +93,7 @@
           </b-form-input>
         </b-form-group>
         <b-form-group
-          label="Confirm Password"
+          :label="$t('signupModal.confirmPasswordLabel')"
           label-for="signup-confirm-password"
           :invalid-feedback="invalidConfirmPassword"
           :valid-feedback="validItem"
@@ -101,7 +101,7 @@
         >
           <b-form-input
             id="signup-confirm-password"
-            placeholder="Confirm your password"
+            :placeholder="$t('signupModal.confirmPasswordPlaceholder')"
             type="password"
             v-model="$v.confirmPassword.$model"
             v-model.trim="confirmPassword"
@@ -114,11 +114,11 @@
           </b-alert>
           <b-row>
             <b-col cols="8">
-              <b-link class="float-left mt-3"><a v-on:click="switchToLogin">Already have an account? Log In.</a></b-link>
+              <b-link class="float-left mt-3"><a v-on:click="switchToLogin">{{ $t("signupModal.loginLink") }}</a></b-link>
             </b-col>
             <b-col>
               <b-button class="btn-success float-right mt-1" title="Login" v-on:click="signupUser">
-                Sign up
+                {{ $t("signupModal.signupButton") }}
               </b-button>
             </b-col>
           </b-row>

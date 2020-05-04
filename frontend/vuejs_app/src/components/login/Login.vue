@@ -6,13 +6,13 @@
            @close="handleClose"
   >
     <template v-slot:modal-title>
-      <div class="text-uppercase">Login</div>
+      <div class="text-uppercase">{{ $t("loginModal.loginHeader") }}</div>
     </template>
     <div class="modal-container">
       <div class="modal-body mb-2">
         <b-form>
           <b-form-group
-            label="Username or email"
+            :label="$t('loginModal.emailLabel')"
             label-for="login-username"
             :invalid-feedback="invalidUsername"
             :valid-feedback="validUsername"
@@ -20,7 +20,7 @@
           >
             <b-form-input
               id="login-username"
-              placeholder="Enter your username or email"
+              :placeholder="$t('loginModal.emailPlaceholder')"
               type="email"
               v-model="$v.username.$model"
               v-model.trim="username"
@@ -28,7 +28,7 @@
             </b-form-input>
           </b-form-group>
           <b-form-group
-            label="Password"
+            :label="$t('loginModal.passwordLabel')"
             label-for="login-password"
             :invalid-feedback="invalidPassword"
             :valid-feedback="validPassword"
@@ -36,7 +36,7 @@
           >
             <b-form-input
               id="login-password"
-              placeholder="Enter your password"
+              :placeholder="$t('loginModal.passwordPlaceholder')"
               type="password"
               v-model="$v.password.$model"
               v-model.trim="password"
@@ -49,12 +49,11 @@
             </b-alert>
             <b-row>
               <b-col cols="8">
-                <b-link class="float-left mt-3"><a v-on:click="switchToSignup">Don't have an account? Sign Up.</a></b-link>
-<!--                <b-link class="float-left mt-3"><router-link to="/signup">Don't have an account? Sign Up.</router-link></b-link>-->
+                <b-link class="float-left mt-3"><a v-on:click="switchToSignup">{{ $t("loginModal.signupLink") }}</a></b-link>
               </b-col>
               <b-col>
                 <b-button class="btn-success float-right mt-1" title="Login" v-on:click="loginUser">
-                  Login
+                  {{ $t("loginModal.loginButton") }}
                 </b-button>
               </b-col>
             </b-row>
