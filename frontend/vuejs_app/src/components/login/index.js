@@ -22,6 +22,8 @@ export function login(username, password) {
     .then(response => {
       store.commit('setToken', response.data['token']);
       store.commit('setIsLogin');
+      localStorage.token = response.data['token'];
+      localStorage.isLogin = true;
       // store.commit('setId');
       // store.commit('setUsername');
       return {status: response.status, errorMessage: ''};
@@ -58,8 +60,17 @@ export function getProfileData(){
       store.commit('setUsername', response.data['username']);
       store.commit('setFirstName', response.data['first_name']);
       store.commit('setLastName', response.data['last_name']);
-      if (response.data['is_staff'])
+
+      localStorage.id = response.data['id'];
+      localStorage.username = response.data['username'];
+      localStorage.firstName = response.data['first_name'];
+      localStorage.lastName = response.data['last_name'];
+      if (response.data['is_staff']) {
         store.commit('setIsAdmin');
+        localStorage.IsAdmin = true;
+      } else {
+        localStorage.IsAdmin = false;
+      }
       return {status: response.status, errorMessage: ''};
     })
     .catch(error => {

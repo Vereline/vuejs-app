@@ -71,7 +71,7 @@ const messages = {
       createButton: 'Create blog',
     },
     mainPage: {
-      mastheadText: 'Welcome to \ "ELVEN SCROLL \"!',
+      mastheadText: 'Welcome to \"ELVEN SCROLL \"!',
       mastheadSubText: 'An exciting adventure game (in development)',
       firstCol: 'Explore new imaginary world...',
       secondCol: 'Read and enjoy an exciting story!',
@@ -195,7 +195,7 @@ const messages = {
 
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-  locale: 'en', // set locale
+  locale: localStorage.locale, // set locale
   fallbackLocale: 'en', // set locale
   messages, // set locale messages
 });

@@ -17,6 +17,8 @@ export function signup(signupData) {
     .then(response => {
       store.commit('setToken', response.data['token']);
       store.commit('setIsLogin');
+      localStorage.token = response.data['token'];
+      localStorage.isLogin = true;
       return {status: response.status, errorMessage: ''};
     })
     .catch(error => {

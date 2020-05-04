@@ -107,10 +107,10 @@
 
       if (theme === 'dark') {
         htmlElement.setAttribute('theme', 'dark');
-        this.darkMode = true
+        this.darkMode = true;
       } else {
         htmlElement.setAttribute('theme', 'light');
-        this.darkMode = false
+        this.darkMode = false;
       }
     },
     watch: {
@@ -121,9 +121,11 @@
 
         if (this.darkMode) {
           store.commit('setSiteTheme', 'dark');
+          localStorage.darkMode = true;
           htmlElement.setAttribute('theme', 'dark');
         } else {
           store.commit('setSiteTheme', 'light');
+          localStorage.darkMode = false;
           htmlElement.setAttribute('theme', 'light');
         }
       }
@@ -131,9 +133,12 @@
     methods: {
       changeLocale: function (locale) {
         $i18n.locale = locale;
+        localStorage.locale = locale;
+        store.commit('setLocale', 'locale');
       },
       signOut: function() {
         store.dispatch("logout");
+        localStorage.clear();
       },
       openLoginModal: function () {
         store.commit('setOpenLoginModal');

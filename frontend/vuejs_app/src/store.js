@@ -1,7 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VuexPersist from 'vuex-persist'
 
 Vue.use(Vuex);
+
+const vuexPersist = new VuexPersist({
+  key: 'vuejs-app',
+  storage: window.localStorage
+})
 
 export default new Vuex.Store({
   state: {
@@ -62,6 +68,9 @@ export default new Vuex.Store({
     setSiteTheme(state, theme) {
       state.siteTheme = theme
     },
+    setLocale(state, locale) {
+      state.locale = locale
+    },
   },
   actions: {
     logout(context) {
@@ -74,5 +83,6 @@ export default new Vuex.Store({
       context.commit('setToken', "");
     }
     // put asynchronous functions that can call one or more mutation functions
-  }
+  },
+  plugins: [vuexPersist.plugin],
 })
